@@ -41,7 +41,7 @@ public class UserService {
 	    User user = null;
 	    if(optional.isPresent()){
             user = optional.get();
-        }
+        }	    
         return user;
     }
 
@@ -86,6 +86,11 @@ public class UserService {
     public User getUserByEmail(String email) {
         User user = userDao.findByEmail(email);
         return user;
+    }
+    
+    public User getUserByPhone(String phone){
+    	User user = userDao.findByPhone(phone);
+    	return user;
     }
 
     public void register(UserDto userDto) {

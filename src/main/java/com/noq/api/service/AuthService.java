@@ -14,9 +14,9 @@ public class AuthService {
 
     public void registerUser(UserDto userDto) throws ValidationException{
 
-        if (userService.getUserByEmail(userDto.getEmail()) != null) {
-            throw new ValidationException("There is an account with that email adress: "
-                    +  userDto.getEmail());
+        if (userService.getUserByPhone(userDto.getPhone())!=null) {
+            throw new ValidationException("There is already an account with phone number: "
+                    +  userDto.getPhone());
         }else{
             userService.register(userDto);
         }

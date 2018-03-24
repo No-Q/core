@@ -18,7 +18,7 @@ public class UserDto {
     private String email;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty    
     private String phone;
 
     @NotNull
