@@ -6,9 +6,9 @@ public class UserResponse {
     String email;
     String phone;
     String referralCode;
-    Integer rating;
+    float rating;
 
-    public UserResponse(Long id,String name, String email, String phone, String referralCode, Integer rating) {
+    public UserResponse(Long id,String name, String email, String phone, String referralCode, float rating) {
         this.id=id;
         this.name = name;
         this.email = email;

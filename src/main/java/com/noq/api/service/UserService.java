@@ -5,6 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.google.gson.Gson;
 import com.noq.api.dao.AddressDao;
 import com.noq.api.dao.UserDao;
 import com.noq.api.dto.UserDto;
@@ -15,13 +22,6 @@ import com.noq.api.model.request.UserAddressAddRequest;
 import com.noq.api.model.request.UserCreateRequest;
 import com.noq.api.response.AddressResponse;
 import com.noq.api.response.UserResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import com.google.gson.Gson;
 
 @Service
 public class UserService {
