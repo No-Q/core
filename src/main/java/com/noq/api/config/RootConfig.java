@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "com.noq.api" })
+@ComponentScan(basePackages = { "com.noq" })
 public class RootConfig implements WebMvcConfigurer {
 
     @Override

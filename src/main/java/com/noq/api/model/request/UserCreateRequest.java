@@ -12,7 +12,7 @@ public class UserCreateRequest {
     @NotNull(message = "user name must not be null")
     String name;
     @Valid
-    @NotNull(message = "user email must not be null")
+    @NotNull(message = "user config must not be null")
     String email;
     @Valid
     @NotNull(message = "user phone must not be null")
@@ -20,7 +20,7 @@ public class UserCreateRequest {
 
     @JsonCreator
     public UserCreateRequest(@JsonProperty("name") String name,
-                             @JsonProperty("email") String email,
+                             @JsonProperty("config") String email,
                              @JsonProperty("phone") String phone) {
         this.name = name;
         this.email = email;
@@ -43,7 +43,7 @@ public class UserCreateRequest {
     public String toString() {
         return "UserCreateRequest{" +
                 "name='" + name + '\'' +
-                ", email='" + email + '\'' +
+                ", config='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
     }

@@ -108,4 +108,22 @@ public class User extends BaseEntity{
     public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", referralCode='" + referralCode + '\'' +
+                ", rating=" + rating +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", addresses=" + addresses +
+                ", id=" + id +
+                ", active=" + active +
+                ", createdOn=" + createdOn +
+                ", updatedOn=" + updatedOn +
+                '}';
+    }
 }

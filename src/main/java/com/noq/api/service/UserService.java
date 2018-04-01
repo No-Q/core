@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 import com.noq.api.dao.AddressDao;
+import com.noq.api.dao.TokenDao;
 import com.noq.api.dao.UserDao;
 import com.noq.api.dto.UserDto;
 import com.noq.api.model.Address;
 import com.noq.api.model.User;
 import com.noq.api.model.UserRole;
+import com.noq.api.model.VerificationToken;
 import com.noq.api.model.request.UserAddressAddRequest;
 import com.noq.api.model.request.UserCreateRequest;
 import com.noq.api.response.AddressResponse;
@@ -33,6 +35,8 @@ public class UserService {
     AddressDao addressDao;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    TokenDao tokenDao;
 
 	Gson gson = new Gson();
 
@@ -93,15 +97,28 @@ public class UserService {
     	return user;
     }
 
-    public void register(UserDto userDto) {
+    public User register(UserDto userDto) {
 	    User user = new User();
 	    user.setName(userDto.getName());
 	    user.setPhone(userDto.getPhone());
 	    user.setEmail(userDto.getEmail());
 	    user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 	    user.setRole(gson.toJson(Arrays.asList(UserRole.USER.name())));
-        user.setActive(Boolean.TRUE);
+        LOGGER.info("Saving user into database: "+user);
+	    userDao.save(user);
+	    return user;
+    }
 
+    public void createVerificationToken(User user, String token) {
+        VerificationToken myToken = new VerificationToken(token, user);
+        tokenDao.save(myToken);
+    }
+
+    public VerificationToken getVerificationToken(String VerificationToken) {
+        return tokenDao.findByToken(VerificationToken);
+    }
+
+    public void update(User user) {
 	    userDao.save(user);
     }
 }

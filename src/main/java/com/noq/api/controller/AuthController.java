@@ -1,24 +1,27 @@
 package com.noq.api.controller;
 
 import com.noq.api.dto.UserDto;
+import com.noq.api.model.User;
+import com.noq.api.model.VerificationToken;
 import com.noq.api.service.AuthService;
 
+import com.noq.api.service.UserService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
+import java.util.Calendar;
+import java.util.Locale;
 
-@Api(value = "/user", description = "Manages user authentication and registration" )
-@RequestMapping(value = "/user")
+@Api(description = "Manages user authentication and registration" )
 @Controller
 public class AuthController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
@@ -28,13 +31,24 @@ public class AuthController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void registerUser(@RequestBody(required = true) @Valid UserDto userDto) {
+    public void registerUser(@RequestBody(required = true) @Valid UserDto userDto,
+                             WebRequest request) {
         LOGGER.info("Received registration request:"+userDto);
         try{
-            authService.registerUser(userDto);
+            authService.registerUser(userDto,request);
         }catch (Exception e){
             throw new ValidationException(e);
         }
 
+    }
+
+    @RequestMapping(value = "/config/confirm", method = RequestMethod.GET)
+    @ResponseStatus(code = HttpStatus.OK)
+    public String confirmRegistration
+            (WebRequest request,@RequestParam("token") String token) {
+
+        LOGGER.info("Received config confirmation request with token:"+token);
+        authService.confirmEmail(request,token);
+        return "redirect:/login";
     }
 }

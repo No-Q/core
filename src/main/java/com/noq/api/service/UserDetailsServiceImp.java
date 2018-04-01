@@ -34,14 +34,13 @@ public class UserDetailsServiceImp implements UserDetailsService {
                     "No user found with username: "+ email);
         }
         LOGGER.info("Verifying Password:"+user.getPassword());
-        boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
         return  new org.springframework.security.core.userdetails.User
                 (user.getEmail(),
                 user.getPassword(),
-                enabled,
+                user.isActive(),
                 accountNonExpired,
                 credentialsNonExpired,
                 accountNonLocked,

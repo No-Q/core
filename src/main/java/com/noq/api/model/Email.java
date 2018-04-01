@@ -55,7 +55,7 @@ public class Email extends BaseEntity {
     @Override
     public String toString() {
         return "Email{" +
-                "email='" + email + '\'' +
+                "config='" + email + '\'' +
                 ", verified=" + verified +
                 ", type=" + type +
                 ", id=" + id +
