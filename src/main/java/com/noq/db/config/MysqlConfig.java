@@ -1,4 +1,4 @@
-package com.noq.api.config.db;
+package com.noq.db.config;
 
 public class MysqlConfig {
 

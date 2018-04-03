@@ -1,4 +1,4 @@
-package com.noq.api.model;
+package com.noq.db.model;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

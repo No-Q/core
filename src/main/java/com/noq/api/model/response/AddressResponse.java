@@ -1,4 +1,4 @@
-package com.noq.api.response;
+package com.noq.api.model.response;
 
 public class AddressResponse {
 

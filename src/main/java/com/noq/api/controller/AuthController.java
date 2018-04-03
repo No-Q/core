@@ -1,12 +1,8 @@
 package com.noq.api.controller;
 
 import com.noq.api.dto.UserDto;
-import com.noq.api.model.User;
-import com.noq.api.model.VerificationToken;
 import com.noq.api.service.AuthService;
 
-import com.noq.api.service.UserService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +14,6 @@ import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
-import java.util.Calendar;
-import java.util.Locale;
 
 @Api(description = "Manages user authentication and registration" )
 @Controller

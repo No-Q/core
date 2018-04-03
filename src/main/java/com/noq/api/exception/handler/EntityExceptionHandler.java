@@ -1,6 +1,6 @@
 package com.noq.api.exception.handler;
 
-import com.noq.api.response.GenericResponse;
+import com.noq.api.model.response.GenericResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;

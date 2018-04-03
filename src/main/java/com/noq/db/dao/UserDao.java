@@ -1,7 +1,7 @@
-package com.noq.api.dao;
+package com.noq.db.dao;
 
 import org.springframework.data.repository.CrudRepository;
-import com.noq.api.model.User;
+import com.noq.db.model.User;
 
 
 public interface UserDao extends CrudRepository<User, Long>{

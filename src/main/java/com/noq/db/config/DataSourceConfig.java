@@ -1,4 +1,4 @@
-package com.noq.api.config.db;
+package com.noq.db.config;
 
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories("com.noq.api.dao")
+@EnableJpaRepositories("com.noq.db.dao")
 public class DataSourceConfig {
 
-	private static final String MODEL_PACKAGE = "com.noq.api.model";
+	private static final String MODEL_PACKAGE = "com.noq.db.model";
 	private static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
 	private static final String HIBERNATE_HBM2DDL_AUTO = "update";
 	private static final String HIBERNATE_DIALECT = "org.hibernate.dialect.MySQLDialect";

@@ -2,11 +2,9 @@ package com.noq.api.service;
 
 import com.noq.api.dto.UserDto;
 import com.noq.api.event.publisher.EventPublisher;
-import com.noq.api.model.User;
-import com.noq.api.model.VerificationToken;
-import com.noq.event.model.OnRegistrationCompleteEvent;
+import com.noq.db.model.User;
+import com.noq.db.model.VerificationToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 

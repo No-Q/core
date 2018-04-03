@@ -1,7 +1,7 @@
 package com.noq.event.listener;
 
 import com.google.gson.Gson;
-import com.noq.api.model.User;
+import com.noq.db.model.User;
 import com.noq.api.service.UserService;
 import com.noq.email.service.IEmailService;
 import com.noq.event.model.OnRegistrationCompleteEvent;

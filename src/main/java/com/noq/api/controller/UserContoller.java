@@ -3,7 +3,7 @@ package com.noq.api.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.validation.ValidationException;
-import com.noq.api.model.User;
+import com.noq.db.model.User;
 import com.noq.api.model.request.UserAddressAddRequest;
 import com.noq.api.model.request.UserCreateRequest;
 import io.swagger.annotations.Api;

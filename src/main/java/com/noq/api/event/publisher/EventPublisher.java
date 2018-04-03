@@ -1,7 +1,7 @@
 package com.noq.api.event.publisher;
 
 import com.google.gson.Gson;
-import com.noq.api.model.User;
+import com.noq.db.model.User;
 import com.noq.event.model.OnRegistrationCompleteEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

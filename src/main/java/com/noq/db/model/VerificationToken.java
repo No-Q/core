@@ -1,11 +1,11 @@
-package com.noq.api.model;
+package com.noq.db.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
-@Entity(name="verificationToken")
+@Entity(name="verification_token")
 public class VerificationToken extends BaseEntity {
     private static final int EXPIRATION = 60 * 24;
 

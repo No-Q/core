@@ -1,4 +1,4 @@
-package com.noq.api.response;
+package com.noq.api.model.response;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
