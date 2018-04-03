@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import com.noq.api.dto.UserDto;
+import com.noq.api.model.request.UserDto;
 import com.noq.db.dao.AddressDao;
 import com.noq.db.dao.TokenDao;
 import com.noq.db.dao.UserDao;

@@ -1,6 +1,6 @@
 package com.noq.api.service;
 
-import com.noq.api.dto.UserDto;
+import com.noq.api.model.request.UserDto;
 import com.noq.api.event.publisher.EventPublisher;
 import com.noq.db.model.User;
 import com.noq.db.model.VerificationToken;

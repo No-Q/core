@@ -1,6 +1,6 @@
 package com.noq.api.controller;
 
-import com.noq.api.dto.UserDto;
+import com.noq.api.model.request.UserDto;
 import com.noq.api.service.AuthService;
 
 import io.swagger.annotations.Api;

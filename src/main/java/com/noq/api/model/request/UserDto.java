@@ -1,4 +1,4 @@
-package com.noq.api.dto;
+package com.noq.api.model.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
