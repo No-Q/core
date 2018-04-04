@@ -1,5 +1,7 @@
 package com.noq.db.model;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -19,14 +21,19 @@ public class VerificationToken extends BaseEntity {
     @Column
     private Date expiryDate;
 
+    @Column
+    private String type;
+
     public VerificationToken() {
         super();
     }
 
-    public VerificationToken(String token, User user) {
+    public VerificationToken(String token, User user, VerificationTokenType type) {
         this.token = token;
         this.user = user;
+        this.type = type.name();
         this.expiryDate = calculateExpiryDate(EXPIRATION);
+        this.active = Boolean.TRUE;
     }
 
     private Date calculateExpiryDate(int expiryTimeInMinutes) {
@@ -34,6 +41,18 @@ public class VerificationToken extends BaseEntity {
         cal.setTime(new Timestamp(cal.getTime().getTime()));
         cal.add(Calendar.MINUTE, expiryTimeInMinutes);
         return new Date(cal.getTime().getTime());
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public VerificationTokenType getType() {
+        return VerificationTokenType.valueOf(type);
+    }
+
+    public void setType(VerificationTokenType type) {
+        this.type = type.name();
     }
 
     public void setToken(String token) {

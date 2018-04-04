@@ -1,10 +1,14 @@
 package com.noq.event.listener;
 
 import com.google.gson.Gson;
+import com.noq.db.dao.TokenDao;
 import com.noq.db.model.User;
 import com.noq.api.service.UserService;
+import com.noq.db.model.VerificationToken;
+import com.noq.db.model.VerificationTokenType;
 import com.noq.email.service.IEmailService;
 import com.noq.event.model.OnRegistrationCompleteEvent;
+import com.noq.sms.ISmsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,12 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     @Autowired
     private IEmailService emailService;
 
+    @Autowired
+    private ISmsService smsService;
+
+    @Autowired
+    TokenDao tokenDao;
+
     Gson gson = new Gson();
 
     @Override
@@ -38,17 +48,35 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
 
+        sendVerificationEmail(event);
+        sendVerificationSms(event);
+    }
+
+    private void sendVerificationSms(OnRegistrationCompleteEvent event) {
         User user = event.getUser();
-        String token = UUID.randomUUID().toString();
-        service.createVerificationToken(user, token);
+        String smsToken = UUID.randomUUID().toString();
+        createVerificationToken(user,smsToken,VerificationTokenType.SMS);
+        String smsText = "NoQ verification OTP:"+smsToken;
+        smsService.sendSms(user.getPhone(),smsText);
+    }
+
+    private void sendVerificationEmail(OnRegistrationCompleteEvent event) {
+        User user = event.getUser();
+        String emailToken = UUID.randomUUID().toString();
+        createVerificationToken(user,emailToken,VerificationTokenType.EMAIL);
 
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
         String confirmationUrl
-                = event.getAppUrl() + "/config/confirm.html?token=" + token;
+                = event.getAppUrl() + "/email/verify?token=" + emailToken;
         String message = messages.getMessage("message.regSucc", null, event.getLocale());
-        message = message + " rn" + "http://localhost:8080" + confirmationUrl;
+        message = message + " " + "http://localhost:8080" + confirmationUrl;
 
         emailService.sendMail(recipientAddress,subject,message);
+    }
+
+    private void createVerificationToken(User user, String token, VerificationTokenType type) {
+        VerificationToken myToken = new VerificationToken(token, user, type);
+        tokenDao.save(myToken);
     }
 }

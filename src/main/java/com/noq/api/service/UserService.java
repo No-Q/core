@@ -35,8 +35,6 @@ public class UserService {
     AddressDao addressDao;
     @Autowired
     PasswordEncoder passwordEncoder;
-    @Autowired
-    TokenDao tokenDao;
 
 	Gson gson = new Gson();
 
@@ -107,15 +105,6 @@ public class UserService {
         LOGGER.info("Saving user into database: "+user);
 	    userDao.save(user);
 	    return user;
-    }
-
-    public void createVerificationToken(User user, String token) {
-        VerificationToken myToken = new VerificationToken(token, user);
-        tokenDao.save(myToken);
-    }
-
-    public VerificationToken getVerificationToken(String VerificationToken) {
-        return tokenDao.findByToken(VerificationToken);
     }
 
     public void update(User user) {

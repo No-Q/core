@@ -3,6 +3,7 @@ package com.noq.api.controller;
 import com.noq.api.model.request.UserDto;
 import com.noq.api.service.AuthService;
 
+import com.noq.db.model.VerificationTokenType;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,13 +37,23 @@ public class AuthController {
 
     }
 
-    @RequestMapping(value = "/config/confirm", method = RequestMethod.GET)
+    @RequestMapping(value = "/email/verify", method = RequestMethod.GET)
     @ResponseStatus(code = HttpStatus.OK)
-    public String confirmRegistration
+    public String verifyEmail
             (WebRequest request,@RequestParam("token") String token) {
 
         LOGGER.info("Received config confirmation request with token:"+token);
-        authService.confirmEmail(request,token);
+        authService.verifyToken(request,token,VerificationTokenType.EMAIL);
+        return "redirect:/login";
+    }
+
+    @RequestMapping(value = "/phone/verify", method = RequestMethod.GET)
+    @ResponseStatus(code = HttpStatus.OK)
+    public String verifyPhoneNumber
+            (WebRequest request,@RequestParam("otp") String otp) {
+
+        LOGGER.info("Received phone verification request with otp:"+otp);
+        authService.verifyToken(request,otp,VerificationTokenType.SMS);
         return "redirect:/login";
     }
 }

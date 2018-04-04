@@ -9,8 +9,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailService implements IEmailService{
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
+public class JavaEmailService implements IEmailService{
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaEmailService.class);
 
     @Autowired
     JavaMailSender mailSender;
@@ -26,7 +26,7 @@ public class EmailService implements IEmailService{
         email.setText(message);
         mailSender.send(email);
 
-        LOGGER.info("Send config for user config verification:"+gson.toJson(email));
+        LOGGER.info("Send email for user email address verification:"+gson.toJson(email));
 
     }
 

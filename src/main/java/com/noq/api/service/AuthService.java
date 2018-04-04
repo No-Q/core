@@ -2,8 +2,13 @@ package com.noq.api.service;
 
 import com.noq.api.model.request.UserDto;
 import com.noq.api.event.publisher.EventPublisher;
+import com.noq.db.dao.TokenDao;
 import com.noq.db.model.User;
 import com.noq.db.model.VerificationToken;
+import com.noq.db.model.VerificationTokenType;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
@@ -14,11 +19,14 @@ import java.util.Locale;
 
 @Service
 public class AuthService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthService.class);
 
     @Autowired
     UserService userService;
     @Autowired
     EventPublisher eventPublisher;
+    @Autowired
+    TokenDao tokenDao;
 
     public void registerUser(UserDto userDto, WebRequest request) throws Exception{
 
@@ -31,26 +39,37 @@ public class AuthService {
                 String appUrl = request.getContextPath();
                 eventPublisher.publishEvent(registeredUser, request.getLocale(), appUrl);
             } catch (Exception e) {
-                throw  new Exception("Exception while generating event for sending verification config:",e);
+                throw  new Exception("Exception while generating event for sending verification token:",e);
             }
         }
     }
 
-    public void confirmEmail(WebRequest request, String token) {
-        Locale locale = request.getLocale();
+    public void verifyToken(WebRequest request, String token, VerificationTokenType type) {
 
-        VerificationToken verificationToken = userService.getVerificationToken(token);
-        if (verificationToken == null) {
-            String message = "Invalid verification token";//messages.getMessage("auth.message.invalidToken", null, locale);
-        }
-
-        User user = verificationToken.getUser();
         Calendar cal = Calendar.getInstance();
-        if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            String messageValue = "Verification token expired";//messages.getMessage("auth.message.expired", null, locale)
+        String errorMsg = null;
+        VerificationToken verificationToken = getVerificationToken(token,type);
+        if (verificationToken == null) {
+            //messages.getMessage("auth.message.invalidToken", null, locale);
+            errorMsg = "Invalid verification token:"+token+" type:"+type.name();
+        }else if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+            //messages.getMessage("auth.message.expired", null, locale)
+            errorMsg = "Verification token expired, token:"+token+" type:"+type;
         }
+        if(errorMsg == null) {
+            User user = verificationToken.getUser();
+            user.setActive(Boolean.TRUE);
+            userService.update(user);
 
-        user.setActive(Boolean.TRUE);
-        userService.update(user);
+            verificationToken.setActive(Boolean.FALSE);
+            tokenDao.save(verificationToken);
+        }else{
+            LOGGER.error("Token verification failed. Error:"+errorMsg);
+        }
     }
+
+    public VerificationToken getVerificationToken(String VerificationToken, VerificationTokenType type) {
+        return tokenDao.findByTokenAndType(VerificationToken,type.name());
+    }
+
 }
