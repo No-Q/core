@@ -16,6 +16,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.UUID;
 
 @Component
@@ -54,10 +56,15 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 
     private void sendVerificationSms(OnRegistrationCompleteEvent event) {
         User user = event.getUser();
-        String smsToken = UUID.randomUUID().toString();
+        String smsToken = ""+generateOtp();
         createVerificationToken(user,smsToken,VerificationTokenType.SMS);
         String smsText = "NoQ verification OTP:"+smsToken;
         smsService.sendSms(user.getPhone(),smsText);
+    }
+
+    private BigInteger generateOtp() {
+        SecureRandom random = new SecureRandom();
+        return new BigInteger(20, random);
     }
 
     private void sendVerificationEmail(OnRegistrationCompleteEvent event) {
