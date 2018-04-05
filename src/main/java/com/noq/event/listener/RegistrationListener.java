@@ -1,14 +1,14 @@
 package com.noq.event.listener;
 
 import com.google.gson.Gson;
-import com.noq.db.dao.TokenDao;
-import com.noq.db.model.User;
+import com.noq.dependencies.db.dao.TokenDao;
+import com.noq.dependencies.db.model.User;
 import com.noq.api.service.UserService;
-import com.noq.db.model.VerificationToken;
-import com.noq.db.model.VerificationTokenType;
-import com.noq.email.service.IEmailService;
+import com.noq.dependencies.db.model.VerificationToken;
+import com.noq.dependencies.db.model.enums.VerificationTokenType;
+import com.noq.dependencies.email.service.IEmailService;
 import com.noq.event.model.OnRegistrationCompleteEvent;
-import com.noq.sms.ISmsService;
+import com.noq.dependencies.sms.ISmsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

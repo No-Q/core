@@ -3,7 +3,7 @@ package com.noq.api.controller;
 import com.noq.api.model.request.UserDto;
 import com.noq.api.service.AuthService;
 
-import com.noq.db.model.VerificationTokenType;
+import com.noq.dependencies.db.model.enums.VerificationTokenType;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

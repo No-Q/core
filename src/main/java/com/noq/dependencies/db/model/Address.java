@@ -1,4 +1,4 @@
-package com.noq.db.model;
+package com.noq.dependencies.db.model;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -16,8 +16,12 @@ public class Address extends BaseEntity{
     double lon;
 
     @ManyToOne
-    @JoinColumn(name = "user_d")
+    @JoinColumn(name = "user_id")
     User user;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_d")
+    Restaurant restaurant;
 
     public Address() {
         super();
@@ -33,6 +37,15 @@ public class Address extends BaseEntity{
         this.lat = lat;
         this.lon = lon;
         this.user = user;
+        this.restaurant = restaurant;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public String getLine1() {
@@ -110,10 +123,7 @@ public class Address extends BaseEntity{
                 ", lat=" + lat +
                 ", lon=" + lon +
                 ", user=" + user +
-                ", id=" + id +
-                ", active=" + active +
-                ", createdOn=" + createdOn +
-                ", updatedOn=" + updatedOn +
+                ", restaurant=" + restaurant +
                 '}';
     }
 }

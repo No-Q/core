@@ -1,7 +1,7 @@
-package com.noq.db.dao;
+package com.noq.dependencies.db.dao;
 
-import com.noq.db.model.Address;
-import com.noq.db.model.User;
+import com.noq.dependencies.db.model.Address;
+import com.noq.dependencies.db.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 

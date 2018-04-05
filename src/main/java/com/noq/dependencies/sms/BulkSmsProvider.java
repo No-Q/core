@@ -1,4 +1,4 @@
-package com.noq.sms;
+package com.noq.dependencies.sms;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

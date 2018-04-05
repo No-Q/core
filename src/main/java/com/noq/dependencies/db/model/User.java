@@ -1,4 +1,4 @@
-package com.noq.db.model;
+package com.noq.dependencies.db.model;
 
 import javax.persistence.*;
 import java.util.Set;
