@@ -1,4 +1,4 @@
-package com.noq.db.model;
+package com.noq.dependencies.db.model;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -20,8 +20,12 @@ public class Address extends BaseEntity{
     String quadKey;
 
     @ManyToOne
-    @JoinColumn(name = "user_d")
+    @JoinColumn(name = "user_id")
     User user;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_d")
+    Restaurant restaurant;
 
     public Address() {
         super();
@@ -38,6 +42,15 @@ public class Address extends BaseEntity{
         this.lon = lon;
         this.user = user;
         this.quadKey = TileSystem.LatLongToQuadKey(16, lat, lon);
+        this.restaurant = restaurant;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public String getLine1() {
@@ -104,21 +117,18 @@ public class Address extends BaseEntity{
         this.user = user;
     }
 
+    public String getQuadKey() {
+		return quadKey;
+	}
+    
+    public void setQuadKey(String quadKey) {
+		this.quadKey = quadKey;
+	}
+    
     @Override
-    public String toString() {
-        return "Address{" +
-                "line1='" + line1 + '\'' +
-                ", line2='" + line2 + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zip='" + zip + '\'' +
-                ", lat=" + lat +
-                ", lon=" + lon +
-                ", user=" + user +
-                ", id=" + id +
-                ", active=" + active +
-                ", createdOn=" + createdOn +
-                ", updatedOn=" + updatedOn +
-                '}';
-    }
+	public String toString() {
+		return "Address [line1=" + line1 + ", line2=" + line2 + ", city=" + city + ", state=" + state + ", zip=" + zip
+				+ ", lat=" + lat + ", lon=" + lon + ", quadKey=" + quadKey + ", user=" + user + ", restaurant="
+				+ restaurant + "]";
+	}
 }

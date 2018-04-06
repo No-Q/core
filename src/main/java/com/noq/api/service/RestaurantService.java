@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.noq.db.dao.AddressDao;
-import com.noq.db.model.Address;
+import com.noq.dependencies.db.dao.AddressDao;
+import com.noq.dependencies.db.model.Address;
 
 @Service
 public class RestaurantService {

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
-import com.noq.db.config.MysqlConfig;
+import com.noq.dependencies.db.config.MysqlConfig;
 
 @Configuration
 @PropertySource(value = "classpath:application.properties")

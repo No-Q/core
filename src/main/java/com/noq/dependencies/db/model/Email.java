@@ -1,4 +1,6 @@
-package com.noq.db.model;
+package com.noq.dependencies.db.model;
+
+import com.noq.dependencies.db.model.enums.EmailType;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 import com.noq.api.model.request.UserDto;
-import com.noq.db.dao.AddressDao;
-import com.noq.db.dao.TokenDao;
-import com.noq.db.dao.UserDao;
-import com.noq.db.model.Address;
-import com.noq.db.model.User;
-import com.noq.db.model.UserRole;
-import com.noq.db.model.VerificationToken;
+import com.noq.dependencies.db.dao.AddressDao;
+import com.noq.dependencies.db.dao.UserDao;
+import com.noq.dependencies.db.model.Address;
+import com.noq.dependencies.db.model.User;
+import com.noq.dependencies.db.model.enums.UserRole;
 import com.noq.api.model.request.UserAddressAddRequest;
 import com.noq.api.model.request.UserCreateRequest;
 import com.noq.api.model.response.AddressResponse;

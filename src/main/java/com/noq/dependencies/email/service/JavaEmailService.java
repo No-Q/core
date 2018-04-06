@@ -1,4 +1,4 @@
-package com.noq.email.service;
+package com.noq.dependencies.email.service;
 
 import com.google.gson.Gson;
 import org.slf4j.Logger;

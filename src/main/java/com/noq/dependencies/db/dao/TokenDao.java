@@ -1,8 +1,7 @@
-package com.noq.db.dao;
+package com.noq.dependencies.db.dao;
 
-import com.noq.db.model.User;
-import com.noq.db.model.VerificationToken;
-import com.noq.db.model.VerificationTokenType;
+import com.noq.dependencies.db.model.User;
+import com.noq.dependencies.db.model.VerificationToken;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TokenDao extends CrudRepository<VerificationToken, Long> {

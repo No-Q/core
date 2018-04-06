@@ -1,6 +1,6 @@
-package com.noq.db.model;
+package com.noq.dependencies.db.model;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.noq.dependencies.db.model.enums.VerificationTokenType;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

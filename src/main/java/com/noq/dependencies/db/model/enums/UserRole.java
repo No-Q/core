@@ -1,4 +1,4 @@
-package com.noq.db.model;
+package com.noq.dependencies.db.model.enums;
 
 import java.util.Arrays;
 

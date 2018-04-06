@@ -1,6 +1,6 @@
 package com.noq.event.model;
 
-import com.noq.db.model.User;
+import com.noq.dependencies.db.model.User;
 import org.springframework.context.ApplicationEvent;
 
 import java.util.Locale;

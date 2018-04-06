@@ -2,11 +2,10 @@ package com.noq.api.service;
 
 import com.noq.api.model.request.UserDto;
 import com.noq.api.event.publisher.EventPublisher;
-import com.noq.db.dao.TokenDao;
-import com.noq.db.model.User;
-import com.noq.db.model.VerificationToken;
-import com.noq.db.model.VerificationTokenType;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.noq.dependencies.db.dao.TokenDao;
+import com.noq.dependencies.db.model.User;
+import com.noq.dependencies.db.model.VerificationToken;
+import com.noq.dependencies.db.model.enums.VerificationTokenType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.ValidationException;
 import java.util.Calendar;
-import java.util.Locale;
 
 @Service
 public class AuthService {
