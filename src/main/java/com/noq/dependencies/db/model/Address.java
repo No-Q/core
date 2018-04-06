@@ -3,6 +3,7 @@ package com.noq.dependencies.db.model;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import com.noq.dependencies.search.QuadKeyUtil;
 
 @Entity(name="address")
 public class Address extends BaseEntity{
@@ -14,6 +15,7 @@ public class Address extends BaseEntity{
     String zip;
     double lat;
     double lon;
+    String quadKey;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -37,6 +39,8 @@ public class Address extends BaseEntity{
         this.lat = lat;
         this.lon = lon;
         this.user = user;
+        // we can move zoomlevel to config 
+        this.quadKey = QuadKeyUtil.LatLongToQuadKey(16, lat, lon);
         this.restaurant = restaurant;
     }
 
@@ -112,18 +116,18 @@ public class Address extends BaseEntity{
         this.user = user;
     }
 
+    public String getQuadKey() {
+		return quadKey;
+	}
+    
+    public void setQuadKey(String quadKey) {
+		this.quadKey = quadKey;
+	}
+    
     @Override
-    public String toString() {
-        return "Address{" +
-                "line1='" + line1 + '\'' +
-                ", line2='" + line2 + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zip='" + zip + '\'' +
-                ", lat=" + lat +
-                ", lon=" + lon +
-                ", user=" + user +
-                ", restaurant=" + restaurant +
-                '}';
-    }
+	public String toString() {
+		return "Address [line1=" + line1 + ", line2=" + line2 + ", city=" + city + ", state=" + state + ", zip=" + zip
+				+ ", lat=" + lat + ", lon=" + lon + ", quadKey=" + quadKey + ", user=" + user + ", restaurant="
+				+ restaurant + "]";
+	}
 }

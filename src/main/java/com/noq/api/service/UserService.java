@@ -34,6 +34,9 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    RestaurantService restaurantService;
+    
 	Gson gson = new Gson();
 
 	public User getUser(long id){
