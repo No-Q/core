@@ -1,4 +1,4 @@
-package com.noq.api.service;
+package com.noq.dependencies.search;
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*::                                                                         :*/

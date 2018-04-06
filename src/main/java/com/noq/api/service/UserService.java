@@ -49,7 +49,6 @@ public class UserService {
     }
 
 	public String getAllUserList() {
-		restaurantService.GetNearbyRestaurants("17.4393669","78.363146", 0);
 		List<User> users = (List<User>) userDao.findAll();
 		List<UserResponse> response = new ArrayList<>();
 		for(User user : users){

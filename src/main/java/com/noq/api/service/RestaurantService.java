@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.noq.dependencies.db.dao.AddressDao;
 import com.noq.dependencies.db.model.Address;
+import com.noq.dependencies.db.model.Restaurant;
+import com.noq.dependencies.search.DistanceCalculator;
+import com.noq.dependencies.search.QuadKeyUtil;
 
 @Service
 public class RestaurantService {
@@ -17,24 +20,23 @@ public class RestaurantService {
 	@Autowired 
 	AddressDao addressDao;
 	
-	 private static final Logger LOGGER = LoggerFactory.getLogger(AuthService.class);
+	 private static final Logger LOGGER = LoggerFactory.getLogger(RestaurantService.class);
 	 
-	 public void GetNearbyRestaurants(String lat, String longi, double rangeInKm)
+	 public List<Restaurant> GetNearbyRestaurants(String lat, String longi, double rangeInKm)
 	 {
-		 String key = TileSystem.LatLongToQuadKey(15, Double.parseDouble(lat), Double.parseDouble(longi));
-		 // get restaurants based on quad key lets say we got 2 restaurants based on key 
-		 List<Address> addresses = (List<Address>)addressDao.findAll();
-		 List<Address> nearbyAddresses = new ArrayList<Address>();
+		 String key = QuadKeyUtil.LatLongToQuadKey(15, Double.parseDouble(lat), Double.parseDouble(longi));
+		 // get restaurants based on quad key 
+		 List<Address> addresses = (List<Address>)addressDao.findByQuadKey(key);
+		 List<Restaurant> nearByRestaurants = new ArrayList<Restaurant>();
 		 for(Address address : addresses)
 		 {
 			 double distance = DistanceCalculator.distance(Double.parseDouble(lat), Double.parseDouble(longi),
 					 address.getLat(), address.getLon(), "K");
-			 System.out.println(distance);
-			 if(distance < rangeInKm)
+			 if(distance <= rangeInKm)
 			 {
-				 nearbyAddresses.add(address);
+				 nearByRestaurants.add(address.getRestaurant());
 			 }
-			 
 		 }
+		 return nearByRestaurants;
 	 }
 }

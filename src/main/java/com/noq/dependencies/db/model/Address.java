@@ -3,9 +3,7 @@ package com.noq.dependencies.db.model;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import com.noq.api.service.LocationDistanceOperation;
-import com.noq.api.service.TileSystem;
+import com.noq.dependencies.search.QuadKeyUtil;
 
 @Entity(name="address")
 public class Address extends BaseEntity{
@@ -41,7 +39,8 @@ public class Address extends BaseEntity{
         this.lat = lat;
         this.lon = lon;
         this.user = user;
-        this.quadKey = TileSystem.LatLongToQuadKey(16, lat, lon);
+        // we can move zoomlevel to config 
+        this.quadKey = QuadKeyUtil.LatLongToQuadKey(16, lat, lon);
         this.restaurant = restaurant;
     }
 

@@ -1,6 +1,6 @@
-package com.noq.api.service;
+package com.noq.dependencies.search;
 
-public class TileSystem
+public class QuadKeyUtil
 {
     private static double EarthRadius = 6378137;
     private static double MinLatitude = -85.05112878;
@@ -185,8 +185,8 @@ public class TileSystem
 	public static String LatLongToQuadKey(int levelOfDetail, Double latitude, Double longitude)
     {
     	Coordinate coordinate = LatLongToPixelXY(latitude, longitude, levelOfDetail);
-    	Coordinate tileCoordinate = PixelXYToTileXY(coordinate.X, coordinate.Y);
-    	return TileXYToQuadKey(tileCoordinate.X, tileCoordinate.Y, levelOfDetail);
+    	Coordinate tileCoordinate = PixelXYToTileXY(coordinate.getX(), coordinate.getY());
+    	return TileXYToQuadKey(tileCoordinate.getX(), tileCoordinate.getY(), levelOfDetail);
     }
 
     /// <summary>

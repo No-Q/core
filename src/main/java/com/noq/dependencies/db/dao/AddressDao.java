@@ -11,4 +11,6 @@ import java.util.List;
 public interface AddressDao extends CrudRepository<Address, Long> {
 
     List<Address> findByUser(User user);
+    
+    List<Address> findByQuadKey(String quadKey);
 }
