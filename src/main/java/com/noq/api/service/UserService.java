@@ -36,6 +36,9 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    RestaurantService restaurantService;
+    
 	Gson gson = new Gson();
 
 	public User getUser(long id){
@@ -48,6 +51,7 @@ public class UserService {
     }
 
 	public String getAllUserList() {
+		restaurantService.GetNearbyRestaurants("17.4393669","78.363146", 0);
 		List<User> users = (List<User>) userDao.findAll();
 		List<UserResponse> response = new ArrayList<>();
 		for(User user : users){

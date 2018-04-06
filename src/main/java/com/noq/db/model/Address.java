@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.noq.api.service.LocationDistanceOperation;
+import com.noq.api.service.TileSystem;
+
 @Entity(name="address")
 public class Address extends BaseEntity{
 
@@ -14,6 +17,7 @@ public class Address extends BaseEntity{
     String zip;
     double lat;
     double lon;
+    String quadKey;
 
     @ManyToOne
     @JoinColumn(name = "user_d")
@@ -33,6 +37,7 @@ public class Address extends BaseEntity{
         this.lat = lat;
         this.lon = lon;
         this.user = user;
+        this.quadKey = TileSystem.LatLongToQuadKey(16, lat, lon);
     }
 
     public String getLine1() {
