@@ -18,7 +18,7 @@ public class Email extends BaseEntity {
     User user;
 
     @ManyToOne
-    @JoinColumn(name = "user_d")
+    @JoinColumn(name = "restaurant_d")
     Restaurant restaurant;
 
     public Email(String email, Boolean verified, EmailType type, User user) {

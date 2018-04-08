@@ -3,6 +3,7 @@ package com.noq.dependencies.db.model;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import com.noq.api.model.request.AddressAddRequest;
 import com.noq.dependencies.search.QuadKeyUtil;
 
 @Entity(name="address")
@@ -41,6 +42,17 @@ public class Address extends BaseEntity{
         this.user = user;
         // we can move zoomlevel to config 
         this.quadKey = QuadKeyUtil.LatLongToQuadKey(16, lat, lon);
+        this.restaurant = restaurant;
+    }
+
+    public Address(AddressAddRequest address,Restaurant restaurant) {
+        this.line1 = address.getLine1();
+        this.line2 = address.getLine2();
+        this.city = address.getCity();
+        this.state = address.getState();
+        this.zip = address.getZip();
+        this.lat = address.getLat();
+        this.lon = address.getLon();
         this.restaurant = restaurant;
     }
 
