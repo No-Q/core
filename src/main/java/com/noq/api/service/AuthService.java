@@ -1,7 +1,7 @@
 package com.noq.api.service;
 
-import com.noq.api.model.request.UserDto;
 import com.noq.api.event.publisher.EventPublisher;
+import com.noq.api.model.request.UserRegistrationRequest;
 import com.noq.dependencies.db.dao.TokenDao;
 import com.noq.dependencies.db.model.User;
 import com.noq.dependencies.db.model.VerificationToken;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.validation.Valid;
 import javax.validation.ValidationException;
 import java.util.Calendar;
 
@@ -26,7 +27,7 @@ public class AuthService {
     @Autowired
     TokenDao tokenDao;
 
-    public void registerUser(UserDto userDto, WebRequest request) throws Exception{
+    public void registerUser(@Valid UserRegistrationRequest userDto, WebRequest request) throws Exception{
 
         if (userService.getUserByPhone(userDto.getPhone())!=null) {
             throw new ValidationException("There is already an account with phone number: "

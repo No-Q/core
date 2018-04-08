@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.noq.api.model.request.UserDto;
+import com.noq.api.model.request.UserRegistrationRequest;
 import com.noq.dependencies.db.dao.AddressDao;
 import com.noq.dependencies.db.dao.UserDao;
 import com.noq.dependencies.db.model.Address;
@@ -21,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
-
 import javax.validation.ValidationException;
 
 @Service
@@ -34,9 +33,8 @@ public class UserService {
     private AddressDao addressDao;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
-    RestaurantService restaurantService;
+    private RestaurantService restaurantService;
 
     private final Gson gson = new Gson();
 
@@ -100,7 +98,7 @@ public class UserService {
         return userDao.findByPhone(phone);
     }
 
-    public User register(UserDto userDto) {
+    public User register(UserRegistrationRequest userDto) {
         User user = new User();
         user.setName(userDto.getName());
         user.setPhone(userDto.getPhone());

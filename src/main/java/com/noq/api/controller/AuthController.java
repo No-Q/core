@@ -1,6 +1,6 @@
 package com.noq.api.controller;
 
-import com.noq.api.model.request.UserDto;
+import com.noq.api.model.request.UserRegistrationRequest;
 import com.noq.api.service.AuthService;
 
 import com.noq.dependencies.db.model.enums.VerificationTokenType;
@@ -26,7 +26,7 @@ public class AuthController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void registerUser(@RequestBody(required = true) @Valid UserDto userDto,
+    public void registerUser(@RequestBody(required = true) @Valid UserRegistrationRequest userDto,
                              WebRequest request) {
         LOGGER.info("Received registration request:"+userDto);
         try{

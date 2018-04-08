@@ -6,7 +6,7 @@ import com.noq.api.validator.email.ValidEmail;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class UserDto {
+public class UserRegistrationRequest {
 
     @NotNull
     @NotEmpty
@@ -26,7 +26,7 @@ public class UserDto {
     private String password;
 
     @JsonCreator
-    public UserDto(@JsonProperty("name") @NotNull @NotEmpty String name,
+    public UserRegistrationRequest(@JsonProperty("name") @NotNull @NotEmpty String name,
                    @JsonProperty("phone") @NotNull @NotEmpty String phone,
                    @JsonProperty("email") @NotNull @NotEmpty String email,
                    @JsonProperty("password") @NotNull @NotEmpty String password) {
@@ -70,7 +70,7 @@ public class UserDto {
 
     @Override
     public String toString() {
-        return "UserDto{" +
+        return "UserRegistrationRequest{" +
                 "Name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
