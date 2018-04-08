@@ -8,14 +8,14 @@ import com.noq.dependencies.search.QuadKeyUtil;
 @Entity(name="address")
 public class Address extends BaseEntity{
 
-    String line1;
-    String line2;
-    String city;
-    String state;
-    String zip;
-    double lat;
-    double lon;
-    String quadKey;
+    private String line1;
+    private String line2;
+    private String city;
+    private String state;
+    private String zip;
+    private Double lat;
+    private Double lon;
+    private String quadKey;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -123,11 +123,24 @@ public class Address extends BaseEntity{
     public void setQuadKey(String quadKey) {
 		this.quadKey = quadKey;
 	}
-    
+
     @Override
-	public String toString() {
-		return "Address [line1=" + line1 + ", line2=" + line2 + ", city=" + city + ", state=" + state + ", zip=" + zip
-				+ ", lat=" + lat + ", lon=" + lon + ", quadKey=" + quadKey + ", user=" + user + ", restaurant="
-				+ restaurant + "]";
-	}
+    public String toString() {
+        return "Address{" +
+                "line1='" + line1 + '\'' +
+                ", line2='" + line2 + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zip='" + zip + '\'' +
+                ", lat=" + lat +
+                ", lon=" + lon +
+                ", quadKey='" + quadKey + '\'' +
+                ", user=" + user +
+                ", restaurant=" + restaurant +
+                ", id=" + id +
+                ", active=" + active +
+                ", createdOn=" + createdOn +
+                ", updatedOn=" + updatedOn +
+                '}';
+    }
 }

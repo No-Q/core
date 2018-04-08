@@ -1,6 +1,7 @@
 package com.noq.api.service;
 
 import com.noq.dependencies.db.model.User;
+import com.noq.dependencies.db.model.enums.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,15 +45,14 @@ public class UserDetailsServiceImp implements UserDetailsService {
                 accountNonExpired,
                 credentialsNonExpired,
                 accountNonLocked,
-                getAuthorities(Arrays.asList(user.getRole())));
+                getAuthorities(user.getRole()));
     }
 
-    private static List<GrantedAuthority> getAuthorities (List<String> roles) {
+    private static List<GrantedAuthority> getAuthorities (UserRole role) {
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (String role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
+        authorities.add(new SimpleGrantedAuthority(role.name()));
+
         return authorities;
     }
 

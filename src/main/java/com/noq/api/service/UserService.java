@@ -1,7 +1,6 @@
 package com.noq.api.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,46 +22,53 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 
+import javax.validation.ValidationException;
+
 @Service
 public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
-	@Autowired
-    UserDao userDao;
-	@Autowired
-    AddressDao addressDao;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private UserDao userDao;
+    @Autowired
+    private AddressDao addressDao;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     RestaurantService restaurantService;
-    
-	Gson gson = new Gson();
 
-	public User getUser(long id){
-	    Optional<User> optional = userDao.findById(id);
-	    User user = null;
-	    if(optional.isPresent()){
+    private final Gson gson = new Gson();
+
+    public User getUser(long id){
+        Optional<User> optional = userDao.findById(id);
+        User user = null;
+        if(optional.isPresent()){
             user = optional.get();
-        }	    
+        }
         return user;
     }
 
-	public String getAllUserList() {
-		List<User> users = (List<User>) userDao.findAll();
-		List<UserResponse> response = new ArrayList<>();
-		for(User user : users){
+    public String getAllUserList() {
+        List<User> users = (List<User>) userDao.findAll();
+        List<UserResponse> response = new ArrayList<>();
+        for(User user : users){
             UserResponse userResponse = new UserResponse(user.getId(),user.getName(),user.getEmail(),
                     user.getPhone(),user.getReferralCode(),user.getRating());
             response.add(userResponse);
         }
-		return gson.toJson(response);
-	}
+        return gson.toJson(response);
+    }
 
     public void add(UserCreateRequest request) {
-	    User user = new User(request.getName(),request.getEmail(),request.getPhone());
-	    user.setActive(Boolean.TRUE);
-        userDao.save(user);
+        if (getUserByPhone(request.getPhone())!=null) {
+            throw new ValidationException("There is already an account with phone number: "
+                    +  request.getPhone());
+        }else {
+            User user = new User(request.getName(), request.getEmail(), request.getPhone());
+            user.setActive(Boolean.TRUE);
+            userDao.save(user);
+        }
     }
 
     public void addAddress(User user, UserAddressAddRequest request) {
@@ -87,28 +93,26 @@ public class UserService {
     }
 
     public User getUserByEmail(String email) {
-        User user = userDao.findByEmail(email);
-        return user;
+        return userDao.findByEmail(email);
     }
-    
+
     public User getUserByPhone(String phone){
-    	User user = userDao.findByPhone(phone);
-    	return user;
+        return userDao.findByPhone(phone);
     }
 
     public User register(UserDto userDto) {
-	    User user = new User();
-	    user.setName(userDto.getName());
-	    user.setPhone(userDto.getPhone());
-	    user.setEmail(userDto.getEmail());
-	    user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-	    user.setRole(gson.toJson(Arrays.asList(UserRole.USER.name())));
+        User user = new User();
+        user.setName(userDto.getName());
+        user.setPhone(userDto.getPhone());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setRole(UserRole.CUSTOMER);
         LOGGER.info("Saving user into database: "+user);
-	    userDao.save(user);
-	    return user;
+        userDao.save(user);
+        return user;
     }
 
     public void update(User user) {
-	    userDao.save(user);
+        userDao.save(user);
     }
 }

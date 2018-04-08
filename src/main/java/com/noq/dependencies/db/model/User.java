@@ -1,5 +1,10 @@
 package com.noq.dependencies.db.model;
 
+import com.noq.dependencies.db.model.enums.PaymentMethod;
+import com.noq.dependencies.db.model.enums.UserRole;
+import com.noq.dependencies.db.model.enums.UserSignupType;
+import com.noq.dependencies.db.model.enums.UserStatus;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -7,19 +12,36 @@ import java.util.Set;
 public class User extends BaseEntity{
 
 	@Column(name = "name", nullable = false)
-	String name;
+	private String name;
 	@Column(name = "email", nullable = false)
-	String email;
+	private String email;
     @Column(name = "phone", nullable = false)
-    String phone;
+    private String phone;
+	@Column(name = "status")
+	private UserStatus userStatus;
+	@Column(name = "avatar")
+	private String avatar;
+	@Column(name = "userAge")
+	private Integer userAge;
+	@Column(name = "userSignupType")
+	private UserSignupType userSignupType;
+	@Column(name = "isEmailVerified")
+	private Boolean isEmailVerified;
+	@Column(name = "isPhoneVerified")
+	private Boolean isPhoneVerified;
+	@Column(name = "userTimezone")
+	private String userTimezone;
+	@Column(name = "defaultPaymentMethod")
+	private PaymentMethod defaultPaymentMethod;
     @Column(name = "referral_code")
-    String referralCode;
+    private String referralCode;
     @Column(name = "rating")
-    Integer rating;
+    private Float rating;
     @Column(name = "password")
     private String password;
     @Column(name = "role")
-    private String role;
+    private UserRole role;
+
 
     @OneToMany(targetEntity=Address.class, mappedBy="user",
             fetch= FetchType.EAGER, cascade = CascadeType.ALL)
@@ -29,13 +51,14 @@ public class User extends BaseEntity{
 		super();
 	}
 
-    public User(String name, String email, String phone, String referralCode, Integer rating, Set<Address> addresses) {
-        this.name = name;
+    public User(String name, String email, String phone, String referralCode,
+                Float rating, Set<Address> addresses) {
         this.email = email;
         this.phone = phone;
         this.referralCode = referralCode;
         this.rating = rating;
         this.addresses = addresses;
+        this.name = name;
     }
 
     public User(String name, String email, String phone) {
@@ -43,22 +66,6 @@ public class User extends BaseEntity{
         this.name = name;
         this.email = email;
         this.phone = phone;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
@@ -85,6 +92,70 @@ public class User extends BaseEntity{
         this.phone = phone;
     }
 
+    public UserStatus getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Integer getUserAge() {
+        return userAge;
+    }
+
+    public void setUserAge(Integer userAge) {
+        this.userAge = userAge;
+    }
+
+    public UserSignupType getUserSignupType() {
+        return userSignupType;
+    }
+
+    public void setUserSignupType(UserSignupType userSignupType) {
+        this.userSignupType = userSignupType;
+    }
+
+    public Boolean getEmailVerified() {
+        return isEmailVerified;
+    }
+
+    public void setEmailVerified(Boolean emailVerified) {
+        isEmailVerified = emailVerified;
+    }
+
+    public Boolean getPhoneVerified() {
+        return isPhoneVerified;
+    }
+
+    public void setPhoneVerified(Boolean phoneVerified) {
+        isPhoneVerified = phoneVerified;
+    }
+
+    public String getUserTimezone() {
+        return userTimezone;
+    }
+
+    public void setUserTimezone(String userTimezone) {
+        this.userTimezone = userTimezone;
+    }
+
+    public PaymentMethod getDefaultPaymentMethod() {
+        return defaultPaymentMethod;
+    }
+
+    public void setDefaultPaymentMethod(PaymentMethod defaultPaymentMethod) {
+        this.defaultPaymentMethod = defaultPaymentMethod;
+    }
+
     public String getReferralCode() {
         return referralCode;
     }
@@ -93,12 +164,28 @@ public class User extends BaseEntity{
         this.referralCode = referralCode;
     }
 
-    public Integer getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     public Set<Address> getAddresses() {
@@ -115,10 +202,18 @@ public class User extends BaseEntity{
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
+                ", userStatus=" + userStatus +
+                ", avatar='" + avatar + '\'' +
+                ", userAge=" + userAge +
+                ", userSignupType=" + userSignupType +
+                ", isEmailVerified=" + isEmailVerified +
+                ", isPhoneVerified=" + isPhoneVerified +
+                ", userTimezone='" + userTimezone + '\'' +
+                ", defaultPaymentMethod=" + defaultPaymentMethod +
                 ", referralCode='" + referralCode + '\'' +
                 ", rating=" + rating +
                 ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
+                ", role=" + role +
                 ", addresses=" + addresses +
                 ", id=" + id +
                 ", active=" + active +

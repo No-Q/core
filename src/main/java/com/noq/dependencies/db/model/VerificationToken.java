@@ -22,7 +22,7 @@ public class VerificationToken extends BaseEntity {
     private Date expiryDate;
 
     @Column
-    private String type;
+    private VerificationTokenType type;
 
     public VerificationToken() {
         super();
@@ -31,7 +31,7 @@ public class VerificationToken extends BaseEntity {
     public VerificationToken(String token, User user, VerificationTokenType type) {
         this.token = token;
         this.user = user;
-        this.type = type.name();
+        this.type = type;
         this.expiryDate = calculateExpiryDate(EXPIRATION);
         this.active = Boolean.TRUE;
     }
@@ -48,11 +48,11 @@ public class VerificationToken extends BaseEntity {
     }
 
     public VerificationTokenType getType() {
-        return VerificationTokenType.valueOf(type);
+        return type;
     }
 
     public void setType(VerificationTokenType type) {
-        this.type = type.name();
+        this.type = type;
     }
 
     public void setToken(String token) {

@@ -61,13 +61,14 @@ public class AuthService {
 
             verificationToken.setActive(Boolean.FALSE);
             tokenDao.save(verificationToken);
+            LOGGER.info("Verified user:"+user+" with token:"+token);
         }else{
             LOGGER.error("Token verification failed. Error:"+errorMsg);
         }
     }
 
     public VerificationToken getVerificationToken(String VerificationToken, VerificationTokenType type) {
-        return tokenDao.findByTokenAndType(VerificationToken,type.name());
+        return tokenDao.findByTokenAndType(VerificationToken,type);
     }
 
 }

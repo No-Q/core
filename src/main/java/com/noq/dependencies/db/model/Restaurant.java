@@ -1,7 +1,6 @@
 package com.noq.dependencies.db.model;
 
 import com.noq.dependencies.db.model.enums.RestaurantType;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -9,29 +8,29 @@ import java.util.Set;
 public class Restaurant extends BaseEntity{
 
     @Column
-    String name;
-
+    private String name;
     @Column
-    int costPerPerson;
-
+    private Integer costPerPerson;
     @Column
-    String landmark;
-
+    private String landmark;
     @Column(name="veg_only")
-    Boolean vegOnly;
-
+    private Boolean vegOnly;
     @Column
-    String company;
-
+    private String company;
     @Column(name="restaurant_type")
-    String type;
-
+    private RestaurantType type;
     @Column
-    String email;
+    private String email;
+    @Column
+    private String phone;
 
     @OneToMany(targetEntity=Address.class, mappedBy="restaurant",
             fetch= FetchType.EAGER, cascade = CascadeType.ALL)
     Set<Address> addresses;
+
+    public Restaurant() {
+        super();
+    }
 
     public Restaurant(String name, int costPerPerson, String landmark,
                       Boolean vegOnly, RestaurantType type, String email,
@@ -41,8 +40,27 @@ public class Restaurant extends BaseEntity{
         this.landmark = landmark;
         this.vegOnly = vegOnly;
         this.addresses = addresses;
-        this.type = type.name();
+        this.type = type;
         this.email = email;
+    }
+
+    public Restaurant(String name, String email, String phone, Boolean vegOnly) {
+        this.name = name;
+        this.vegOnly = vegOnly;
+        this.email = email;
+        this.phone = phone;
+    }
+
+    public void setCostPerPerson(Integer costPerPerson) {
+        this.costPerPerson = costPerPerson;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
@@ -61,12 +79,12 @@ public class Restaurant extends BaseEntity{
         this.company = company;
     }
 
-    public String getType() {
+    public RestaurantType getType() {
         return type;
     }
 
     public void setType(RestaurantType type) {
-        this.type = type.name();
+        this.type = type;
     }
 
     public String getName() {

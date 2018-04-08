@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public enum UserRole {
     USER,
+    CUSTOMER,
     ADMIN;
 
     private String value;
@@ -14,7 +15,8 @@ public enum UserRole {
 
     public static String[] getAllRoles() {
         String[] roles =
-                Arrays.toString(UserRole.values()).replaceAll("^.|.$", "").split(", ");
+                Arrays.toString(UserRole.values()).replaceAll("^.|.$", "")
+                        .split(", ");
         return roles;
     }
 }

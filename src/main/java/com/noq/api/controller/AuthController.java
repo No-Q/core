@@ -42,7 +42,7 @@ public class AuthController {
     public String verifyEmail
             (WebRequest request,@RequestParam("token") String token) {
 
-        LOGGER.info("Received config confirmation request with token:"+token);
+        LOGGER.info("Received email confirmation request with token:"+token);
         authService.verifyToken(request,token,VerificationTokenType.EMAIL);
         return "redirect:/login";
     }
