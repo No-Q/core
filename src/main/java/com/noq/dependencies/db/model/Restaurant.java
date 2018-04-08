@@ -51,6 +51,15 @@ public class Restaurant extends BaseEntity{
         this.phone = phone;
     }
 
+    public Restaurant(String name, String email, String phone, Boolean vegOnly, Address address) {
+        super();
+        this.name = name;
+        this.vegOnly = vegOnly;
+        this.email = email;
+        this.phone = phone;
+        this.addresses.add(address);
+    }
+
     public void setCostPerPerson(Integer costPerPerson) {
         this.costPerPerson = costPerPerson;
     }

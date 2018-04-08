@@ -2,24 +2,37 @@ package com.noq.dependencies.db.model;
 
 import com.noq.dependencies.db.model.enums.EmailType;
 
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@Entity(name="email")
 public class Email extends BaseEntity {
 
-    String email;
-    boolean verified;
-    EmailType type;
+    private String email;
+    private Boolean verified;
+    private EmailType type;
 
     @ManyToOne
     @JoinColumn(name = "user_d")
     User user;
 
-    public Email(String email, boolean verified, EmailType type, User user) {
+    @ManyToOne
+    @JoinColumn(name = "user_d")
+    Restaurant restaurant;
+
+    public Email(String email, Boolean verified, EmailType type, User user) {
         this.email = email;
         this.verified = verified;
         this.type = type;
         this.user = user;
+    }
+
+    public Email(String email, Boolean verified, EmailType type, Restaurant restaurant) {
+        this.email = email;
+        this.verified = verified;
+        this.type = type;
+        this.restaurant = restaurant;
     }
 
     public User getUser() {
