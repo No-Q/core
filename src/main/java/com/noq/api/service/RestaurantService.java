@@ -1,10 +1,12 @@
 package com.noq.api.service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.google.gson.Gson;
 import com.noq.api.model.request.RestaurantCreateRequest;
+import com.noq.api.model.response.RestaurantResponse;
 import com.noq.dependencies.db.dao.RestaurantDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +50,16 @@ public class RestaurantService {
 	 }
 
     public String getAll() {
-        return gson.toJson(restaurantDao.findAll());
+        Iterable<Restaurant> restaurantList = restaurantDao.findAll();
+        List<RestaurantResponse> restaurantResponses = new LinkedList<>();
+        for(Restaurant restaurant:restaurantList){
+            RestaurantResponse res = new RestaurantResponse(restaurant.getName(),
+                    restaurant.getCostPerPerson(),restaurant.getLandmark(),
+                    restaurant.getVegOnly(),restaurant.getCompany(),restaurant.getType(),
+                    restaurant.getEmail(),restaurant.getPhone());
+            restaurantResponses.add(res);
+        }
+        return gson.toJson(restaurantResponses);
     }
 
     public void add(RestaurantCreateRequest request) {
