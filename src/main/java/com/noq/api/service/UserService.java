@@ -10,7 +10,7 @@ import com.noq.dependencies.db.dao.UserDao;
 import com.noq.dependencies.db.model.Address;
 import com.noq.dependencies.db.model.User;
 import com.noq.dependencies.db.model.enums.UserRole;
-import com.noq.api.model.request.UserAddressAddRequest;
+import com.noq.api.model.request.AddressAddRequest;
 import com.noq.api.model.request.UserCreateRequest;
 import com.noq.api.model.response.AddressResponse;
 import com.noq.api.model.response.UserResponse;
@@ -69,7 +69,7 @@ public class UserService {
         }
     }
 
-    public void addAddress(User user, UserAddressAddRequest request) {
+    public void addAddress(User user, AddressAddRequest request) {
         Address address = new Address(request.getLine1(),request.getLine2(),
                 request.getCity(),request.getState(),request.getZip(),request.getLat(),
                 request.getLon(),user);

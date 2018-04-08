@@ -53,8 +53,10 @@ public class RestaurantService {
 
     public void add(RestaurantCreateRequest request) {
 	     Restaurant restaurant = new Restaurant(request.getName(),request.getEmail(),
-                 request.getPhone(),request.getVegOnly(),request.getAddress());
+                 request.getPhone(),request.getVegOnly());
+        restaurantDao.save(restaurant);
 
-	     restaurantDao.save(restaurant);
-    }
+        Address address = new Address(request.getAddress(), restaurant);
+        addressDao.save(address);
+	 }
 }

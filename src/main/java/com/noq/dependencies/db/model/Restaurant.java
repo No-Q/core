@@ -2,6 +2,7 @@ package com.noq.dependencies.db.model;
 
 import com.noq.dependencies.db.model.enums.RestaurantType;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name="restaurant")
@@ -57,7 +58,8 @@ public class Restaurant extends BaseEntity{
         this.vegOnly = vegOnly;
         this.email = email;
         this.phone = phone;
-        this.addresses.add(address);
+        this.addresses = new HashSet<>();
+        addresses.add(address);
     }
 
     public void setCostPerPerson(Integer costPerPerson) {

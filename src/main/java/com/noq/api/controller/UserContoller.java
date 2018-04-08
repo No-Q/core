@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.validation.ValidationException;
 import com.noq.dependencies.db.model.User;
-import com.noq.api.model.request.UserAddressAddRequest;
+import com.noq.api.model.request.AddressAddRequest;
 import com.noq.api.model.request.UserCreateRequest;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class UserContoller {
     @RequestMapping(value = "/{id}/address",method = RequestMethod.POST)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void addAddress(@PathVariable("id") long userId,
-            @RequestBody(required = true) UserAddressAddRequest request) {
+            @RequestBody(required = true) AddressAddRequest request) {
 	    User user = userService.getUser(userId);
 	    if(user == null){
 	        throw new ValidationException("User with given id doesn't exists");

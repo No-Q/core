@@ -17,14 +17,14 @@ public class RestaurantCreateRequest {
     @NotNull(message = "Restaurant phone must not be null")
     private String phone;
 
-    private Address address;
+    private AddressAddRequest address;
 
     @JsonCreator
     public RestaurantCreateRequest(@JsonProperty("name") String name,
                              @JsonProperty("email") String email,
                              @JsonProperty("phone") String phone,
                              @JsonProperty("vegOnly") Boolean vegOnly,
-                             @JsonProperty("address") Address address) {
+                             @JsonProperty("address") AddressAddRequest address) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -47,7 +47,18 @@ public class RestaurantCreateRequest {
     public String getPhone() {
         return phone;
     }
-    public Address getAddress() {
+    public AddressAddRequest getAddress() {
         return address;
+    }
+
+    @Override
+    public String toString() {
+        return "RestaurantCreateRequest{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", vegOnly=" + vegOnly +
+                ", phone='" + phone + '\'' +
+                ", address=" + address +
+                '}';
     }
 }

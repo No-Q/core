@@ -30,6 +30,7 @@ public class RestrantContoller {
     @RequestMapping(value = "",method = RequestMethod.POST)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void createUser(@RequestBody(required = true) RestaurantCreateRequest request) {
+        LOGGER.info("Received restaurant create request: "+request);
         restaurantService.add(request);
     }
 }
