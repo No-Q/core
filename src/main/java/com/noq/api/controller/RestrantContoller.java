@@ -1,6 +1,7 @@
 package com.noq.api.controller;
 
 import com.noq.api.model.request.RestaurantCreateRequest;
+import com.noq.api.model.request.RestaurantSearchByLocationRequest;
 import com.noq.api.service.RestaurantService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -25,6 +26,14 @@ public class RestrantContoller {
     public String getAllRestaurants() {
 
         return restaurantService.getAll();
+    }
+
+    @RequestMapping(value = "/search",method = RequestMethod.POST)
+    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
+    public String getNearByRestaurants(@RequestBody(required = true) RestaurantSearchByLocationRequest request) {
+
+        return restaurantService.GetNearbyRestaurants(request.getLatitude(), request.getLongitude(), request.getRadius());
     }
 
     @RequestMapping(value = "",method = RequestMethod.POST)

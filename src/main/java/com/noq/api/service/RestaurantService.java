@@ -29,7 +29,7 @@ public class RestaurantService {
 
 	 private static final Logger LOGGER = LoggerFactory.getLogger(RestaurantService.class);
 	 
-	 public List<Restaurant> GetNearbyRestaurants(String lat, String longi, double rangeInKm)
+	 public String GetNearbyRestaurants(String lat, String longi, double rangeInKm)
 	 {
 		 String key = QuadKeyUtil.LatLongToQuadKey(15, Double.parseDouble(lat), Double.parseDouble(longi));
 		 // get restaurants based on quad key 
@@ -44,7 +44,7 @@ public class RestaurantService {
 				 nearByRestaurants.add(address.getRestaurant());
 			 }
 		 }
-		 return nearByRestaurants;
+		 return gson.toJson(nearByRestaurants);
 	 }
 
     public String getAll() {
