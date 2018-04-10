@@ -26,7 +26,7 @@ public class Restaurant extends BaseEntity{
     private String phone;
 
     @OneToMany(targetEntity=Address.class, mappedBy="restaurant",
-            fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+            fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     Set<Address> addresses;
 
     public Restaurant() {
@@ -60,10 +60,6 @@ public class Restaurant extends BaseEntity{
         this.phone = phone;
         this.addresses = new HashSet<>();
         addresses.add(address);
-    }
-
-    public void setCostPerPerson(Integer costPerPerson) {
-        this.costPerPerson = costPerPerson;
     }
 
     public String getPhone() {
@@ -106,11 +102,10 @@ public class Restaurant extends BaseEntity{
         this.name = name;
     }
 
-    public int getCostPerPerson() {
+    public Integer getCostPerPerson() {
         return costPerPerson;
     }
-
-    public void setCostPerPerson(int costPerPerson) {
+    public void setCostPerPerson(Integer costPerPerson) {
         this.costPerPerson = costPerPerson;
     }
 

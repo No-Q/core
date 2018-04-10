@@ -40,7 +40,7 @@ public class Address extends BaseEntity{
         this.lat = lat;
         this.lon = lon;
         this.user = user;
-        // we can move zoomlevel to config 
+        // we can move zoomlevel to config ç
         this.quadKey = QuadKeyUtil.LatLongToQuadKey(16, lat, lon);
         this.restaurant = restaurant;
     }
