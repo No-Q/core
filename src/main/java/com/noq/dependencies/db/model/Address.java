@@ -54,6 +54,7 @@ public class Address extends BaseEntity{
         this.lat = address.getLat();
         this.lon = address.getLon();
         this.restaurant = restaurant;
+        this.quadKey = QuadKeyUtil.LatLongToQuadKey(13, lat, lon);
     }
 
     public Restaurant getRestaurant() {

@@ -29,19 +29,19 @@ public class RestaurantService {
 
 	 private static final Logger LOGGER = LoggerFactory.getLogger(RestaurantService.class);
 	 
-	 public String GetNearbyRestaurants(String lat, String longi, double rangeInKm)
+	 public String GetNearbyRestaurants(double lat, double longi, double rangeInKm)
 	 {
-		 String key = QuadKeyUtil.LatLongToQuadKey(15, Double.parseDouble(lat), Double.parseDouble(longi));
+		 String key = QuadKeyUtil.LatLongToQuadKey(13, lat, longi);
 		 // get restaurants based on quad key 
 		 List<Address> addresses = (List<Address>)addressDao.findByQuadKey(key);
-		 List<Restaurant> nearByRestaurants = new ArrayList<Restaurant>();
+		 List<String> nearByRestaurants = new ArrayList<String>();
 		 for(Address address : addresses)
 		 {
-			 double distance = DistanceCalculator.distance(Double.parseDouble(lat), Double.parseDouble(longi),
+			 double distance = DistanceCalculator.distance(lat, longi,
 					 address.getLat(), address.getLon(), "K");
 			 if(distance <= rangeInKm)
 			 {
-				 nearByRestaurants.add(address.getRestaurant());
+				 nearByRestaurants.add(address.getRestaurant().getName());
 			 }
 		 }
 		 return gson.toJson(nearByRestaurants);

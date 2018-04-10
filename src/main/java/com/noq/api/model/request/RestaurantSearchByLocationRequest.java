@@ -4,9 +4,9 @@ import javax.validation.constraints.NotNull;
 
 public class RestaurantSearchByLocationRequest {
 	 @NotNull(message = "Latitude")
-	    private String Latitude;
+	    private double Latitude;
 	    @NotNull(message = "Longitude")
-	    private String Longitude;
+	    private double Longitude;
 	    @NotNull(message = "Radius in Km")
 	    private int Radius;
 	    
@@ -15,16 +15,16 @@ public class RestaurantSearchByLocationRequest {
 			return "RestaurantSearchByLocationRequest [Latitude=" + Latitude + ", Longitude=" + Longitude + ", Radius="
 					+ Radius + "]";
 		}
-		public String getLatitude() {
+		public double getLatitude() {
 			return Latitude;
 		}
-		public void setLatitude(String latitude) {
+		public void setLatitude(double latitude) {
 			Latitude = latitude;
 		}
-		public String getLongitude() {
+		public double getLongitude() {
 			return Longitude;
 		}
-		public void setLongitude(String longitude) {
+		public void setLongitude(double longitude) {
 			Longitude = longitude;
 		}
 		public int getRadius() {
