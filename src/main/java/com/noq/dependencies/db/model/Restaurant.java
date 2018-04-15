@@ -2,10 +2,13 @@ package com.noq.dependencies.db.model;
 
 import com.noq.dependencies.db.model.enums.RestaurantType;
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-@Entity(name="restaurant")
+@Table(name="restaurant")
+@Entity
 public class Restaurant extends BaseEntity{
 
     @Column
@@ -21,6 +24,11 @@ public class Restaurant extends BaseEntity{
     @Column(name="restaurant_type")
     private RestaurantType type;
     @Column
+    private Boolean available;
+    @Column
+    private Date nextAvailable;
+
+    @Column
     private String email;
     @Column
     private String phone;
@@ -28,6 +36,10 @@ public class Restaurant extends BaseEntity{
     @OneToMany(targetEntity=Address.class, mappedBy="restaurant",
             fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     Set<Address> addresses;
+
+    @OneToMany(targetEntity=RestaurantAvailability.class, mappedBy="restaurant",
+            cascade = CascadeType.ALL)
+    private List<RestaurantAvailability> availability;
 
     public Restaurant() {
         super();
@@ -60,6 +72,22 @@ public class Restaurant extends BaseEntity{
         this.phone = phone;
         this.addresses = new HashSet<>();
         addresses.add(address);
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
+    public Date getNextAvailable() {
+        return nextAvailable;
+    }
+
+    public void setNextAvailable(Date nextAvailable) {
+        this.nextAvailable = nextAvailable;
     }
 
     public String getPhone() {

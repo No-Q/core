@@ -21,9 +21,16 @@
         <logback-classic.version>1.2.3</logback-classic.version>
         <jul-to-sl4j.version>1.7.7</jul-to-sl4j.version>
         <javax.mail.version>1.5.0-b01</javax.mail.version>
+        <codehaus.jackson.version>1.9.13</codehaus.jackson.version>
     </properties>
 
 	<dependencies>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${codehaus.jackson.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>

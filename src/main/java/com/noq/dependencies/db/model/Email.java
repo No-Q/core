@@ -21,6 +21,10 @@ public class Email extends BaseEntity {
     @JoinColumn(name = "restaurant_d")
     Restaurant restaurant;
 
+    public Email() {
+        super();
+    }
+
     public Email(String email, Boolean verified, EmailType type, User user) {
         this.email = email;
         this.verified = verified;
