@@ -18,7 +18,7 @@ public interface RestaurantDao extends CrudRepository<Restaurant, Long> {
     List<Object[]> findByDayAndHourAndHOAvailable(
             @Param("day") int day,@Param("hour") int hour, @Param("available") boolean HoAvailable);
     /**
-     *  code for iterating over result
+     *  code for iterating over result from join query
      *      List<Object[]> listResult = restaurantDao.findByActive(Boolean.TRUE);
      *       for (Object[] row : listResult) {
      *          Restaurant restaurant = (Restaurant) row[0];

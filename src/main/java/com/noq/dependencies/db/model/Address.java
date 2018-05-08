@@ -23,7 +23,7 @@ public class Address extends BaseEntity{
     User user;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant_d")
+    @JoinColumn(name = "restaurant_id")
     Restaurant restaurant;
 
     public Address() {

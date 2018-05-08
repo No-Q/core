@@ -1,5 +1,6 @@
 package com.noq.api.model.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.Valid;
@@ -18,6 +19,7 @@ public class AddressAddRequest {
     Double lat;
     Double lon;
 
+    @JsonCreator
     public AddressAddRequest(@JsonProperty("line1") String line1,
                              @JsonProperty("line2") String line2,
                              @JsonProperty("city") String city,

@@ -10,7 +10,6 @@ import com.noq.api.model.response.RestaurantListResponse;
 import com.noq.dependencies.db.dao.RestaurantAvailabilityDao;
 import com.noq.dependencies.db.dao.RestaurantDao;
 import com.noq.dependencies.db.model.RestaurantAvailability;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,8 @@ import com.noq.dependencies.db.model.Address;
 import com.noq.dependencies.db.model.Restaurant;
 import com.noq.dependencies.search.DistanceCalculator;
 import com.noq.dependencies.search.QuadKeyUtil;
+
+import javax.xml.bind.ValidationException;
 
 @Service
 public class RestaurantService {
@@ -188,5 +189,17 @@ public class RestaurantService {
 
             restaurantDao.save(restaurant);
         }
+    }
+
+    public Restaurant get(Long restaurantId) throws ValidationException {
+        Restaurant restaurant = null;
+        Optional<Restaurant> restaurantOptional =
+                restaurantDao.findById(restaurantId);
+        if (!restaurantOptional.isPresent()) {
+            LOGGER.error("Invalid restaurant id :"+restaurantId);
+            throw new ValidationException("Invalid restaurant id :"+restaurantId);
+        }
+        restaurant = restaurantOptional.get();
+        return restaurant;
     }
 }

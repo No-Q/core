@@ -41,6 +41,10 @@ public class Restaurant extends BaseEntity{
             cascade = CascadeType.ALL)
     private List<RestaurantAvailability> availability;
 
+    @OneToMany(targetEntity=Item.class, mappedBy="restaurant",
+            fetch= FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<Item> items;
+
     public Restaurant() {
         super();
     }
