@@ -5,9 +5,11 @@ import com.noq.api.model.request.ItemAddRequest;
 import com.noq.api.model.response.ItemResponse;
 import com.noq.dependencies.db.dao.ItemDao;
 import com.noq.dependencies.db.model.Item;
+import com.noq.dependencies.db.model.QItem;
 import com.noq.dependencies.db.model.Restaurant;
 import com.noq.dependencies.db.model.enums.ItemType;
 import com.noq.dependencies.db.model.enums.MealType;
+import com.querydsl.core.types.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,6 @@ import org.springframework.stereotype.Service;
 import javax.xml.bind.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ItemService {
@@ -30,16 +31,9 @@ public class ItemService {
     private final Gson gson = new Gson();
 
     public String getAll() {
-        List<ItemResponse> responses = new ArrayList<>();
         Iterable<Item> itemIterable = itemDao.findAll();
-        List<Item> items = new ArrayList<>();
-        for(Item item: itemIterable){
-            ItemResponse response = new ItemResponse(item.getName(),item.getDescription(),
-                    item.getPrice(),item.getDiscount(),item.getAvailable(),item.getPreparationTime(),
-                    item.getImage(),item.getVeg());
-            responses.add(response);
-        }
-        return gson.toJson(responses);
+
+        return getItemListResponse(itemIterable);
     }
 
     public void save(ItemAddRequest request) throws Exception {
@@ -55,15 +49,46 @@ public class ItemService {
     }
 
     public String getItems(Long restaurantId, String mealTypeStr, String itemName, String itemTypeStr) throws ValidationException {
-        List<Item> items = new ArrayList<>();
-        Restaurant restaurant =
-                restaurantService.get(restaurantId);
+
+        Restaurant restaurant = null;
+        if(restaurantId != null)
+            restaurant = restaurantService.get(restaurantId);
         MealType mealType = MealType.fromString(mealTypeStr);
         ItemType itemType = ItemType.fromString(itemTypeStr);
-        Iterable<Item> itemIterable = itemDao.findByRestaurantAndMealTypeAndItemTypeAndName(restaurant,mealType,itemType,itemName);
-        for(Item item: itemIterable){
-            items.add(item);
-        }
-        return gson.toJson(items);
+        Iterable<Item> itemIterable = getQuery(restaurant,mealType,itemType,itemName);
+
+        return getItemListResponse(itemIterable);
     }
+
+    private Iterable<Item> getQuery(Restaurant restaurant, MealType mealType, ItemType itemType, String itemName) {
+        QItem item = QItem.item;
+
+        Predicate predicate = item.active.eq(Boolean.TRUE);
+
+        if(restaurant != null)
+            predicate = item.restaurant.eq(restaurant).and(predicate);
+        if(mealType != MealType.INVALID)
+            predicate = item.mealType.eq(mealType).and(predicate);
+        if(itemType != ItemType.INVALID)
+            predicate = item.itemType.eq(itemType).and(predicate);
+        if(itemName != null)
+            predicate = item.name.contains(itemName).and(predicate);
+
+        Iterable<Item> items = itemDao.findAll(predicate);
+        return items;
+    }
+
+
+    private String getItemListResponse(Iterable<Item> itemIterable) {
+        List<ItemResponse> responses = new ArrayList<>();
+
+        for(Item item: itemIterable){
+            ItemResponse response = new ItemResponse(item.getName(),item.getDescription(),
+                    item.getPrice(),item.getDiscount(),item.getAvailable(),item.getPreparationTime(),
+                    item.getImage(),item.getVeg());
+            responses.add(response);
+        }
+        return gson.toJson(responses);
+    }
+
 }

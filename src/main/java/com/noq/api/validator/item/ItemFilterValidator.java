@@ -27,9 +27,11 @@ public class ItemFilterValidator {
                 valid = Boolean.FALSE;
             }
         }
-        Restaurant restaurant = restaurantService.get(restaurantId);
-        if(restaurant == null){
-            valid = Boolean.FALSE;
+        if(restaurantId != null){
+            Restaurant restaurant = restaurantService.get(restaurantId);
+            if(restaurant == null){
+                valid = Boolean.FALSE;
+            }
         }
         return valid;
     }

@@ -1,7 +1,7 @@
 package com.noq.dependencies.db.model.enums;
 
 public enum MealType {
-    Breakfast("Breakfast"),Lunch("Breakfast"),Snacks("Snacks"),Dinner("Dinner"), INVALID("invalid");
+    breakfast("breakfast"),lunch("lunch"),snacks("snacks"),dinner("dinner"), INVALID("invalid");
 
     private String value;
 

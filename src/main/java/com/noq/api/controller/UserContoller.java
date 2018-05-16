@@ -24,7 +24,7 @@ public class UserContoller {
 	private UserService userService;
 
 	@RequestMapping(value = "/all",method = RequestMethod.GET)
-	@ResponseStatus(code = HttpStatus.OK)
+	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public String getAllUsers() {
 		
@@ -32,13 +32,13 @@ public class UserContoller {
 	}
 
 	@RequestMapping(value = "",method = RequestMethod.POST)
-    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public void createUser(@RequestBody(required = true) UserCreateRequest request) {
         userService.add(request);
     }
 
     @RequestMapping(value = "/{id}/address",method = RequestMethod.POST)
-    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public void addAddress(@PathVariable("id") long userId,
             @RequestBody(required = true) AddressAddRequest request) {
 	    User user = userService.getUser(userId);
@@ -50,7 +50,7 @@ public class UserContoller {
     }
 
     @RequestMapping(value = "/{id}/address",method = RequestMethod.GET)
-    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String getAddress(@PathVariable("id") long userId) {
         LOGGER.info("Received get all address request for user id:"+userId);

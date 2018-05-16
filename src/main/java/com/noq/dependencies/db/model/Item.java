@@ -2,8 +2,6 @@ package com.noq.dependencies.db.model;
 
 import com.noq.dependencies.db.model.enums.ItemType;
 import com.noq.dependencies.db.model.enums.MealType;
-import lombok.Data;
-
 import javax.persistence.*;
 
 @Table(name="item")

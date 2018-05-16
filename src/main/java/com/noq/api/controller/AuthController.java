@@ -25,7 +25,7 @@ public class AuthController {
     AuthService authService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public void registerUser(@RequestBody(required = true) @Valid UserRegistrationRequest userDto,
                              WebRequest request) {
         LOGGER.info("Received registration request:"+userDto);
@@ -38,7 +38,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/email/verify", method = RequestMethod.GET)
-    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     public String verifyEmail
             (WebRequest request,@RequestParam("token") String token) {
 
@@ -48,7 +48,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/phone/verify", method = RequestMethod.GET)
-    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     public String verifyPhoneNumber
             (WebRequest request,@RequestParam("otp") String otp) {
 

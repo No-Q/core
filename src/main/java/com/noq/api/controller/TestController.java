@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class TestController {
 
 	@RequestMapping(value = "/test",method = RequestMethod.GET)
-	@ResponseStatus(code = HttpStatus.OK)
+	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public String isRunning() {
 		return "Application is running";
 	}
 
     @RequestMapping(value = "/home",method = RequestMethod.GET)
-    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String home() {
         return "Welcome!";

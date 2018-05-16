@@ -26,7 +26,7 @@ public class RestrantContoller {
 
     @ApiOperation(value = "get all active restaurant with availability information")
     @RequestMapping(value = "/all",method = RequestMethod.GET)
-    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String getAllRestaurants() {
 
@@ -35,7 +35,7 @@ public class RestrantContoller {
 
     @ApiOperation(value = "get all active available restaurant for given day and hour with availability information")
     @RequestMapping(value = "/available",method = RequestMethod.GET)
-    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String getByAvailability(
             @RequestParam("day") int dayOfWeek,@RequestParam("hour") int hourOfDay) {
@@ -45,7 +45,7 @@ public class RestrantContoller {
 
     @ApiOperation(value = "resets availability of all restaurant for current hour")
     @RequestMapping(value = "/all/available",method = RequestMethod.PUT)
-    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public void setRestaurantAvailability(
             @RequestParam("day") int dayOfWeek,@RequestParam("hour") int hourOfDay) {
@@ -54,7 +54,7 @@ public class RestrantContoller {
     }
 
     @RequestMapping(value = "/search",method = RequestMethod.POST)
-    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String getNearByRestaurants(@RequestBody(required = true) RestaurantSearchByLocationRequest request) {
         LOGGER.info("Received restaurant search request: "+request);
@@ -63,7 +63,7 @@ public class RestrantContoller {
     }
 
     @RequestMapping(value = "",method = RequestMethod.POST)
-    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public void addRestaurant(@RequestBody(required = true) RestaurantCreateRequest request) {
         LOGGER.info("Received restaurant create request: "+request);
         restaurantService.add(request);
@@ -71,7 +71,7 @@ public class RestrantContoller {
 
     @ApiOperation(value="set/reset restaurant availability")
     @RequestMapping(value = "{id}/availability",method = RequestMethod.POST)
-    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public void addAvailability(
             @PathVariable("id") long id,
             @RequestBody(required = true) List<DayAvailabilityRequest> request){
