@@ -27,12 +27,12 @@ public class UserDetailsServiceImp implements UserDetailsService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
 
-        User user = userService.getUserByEmail(email);
+        User user = userService.getUserByPhone(phone);
         if (user == null) {
             throw new UsernameNotFoundException(
-                    "No user found with username: "+ email);
+                    "No user found with phone: "+ phone);
         }
         LOGGER.info("Verifying Password:"+user.getPassword());
         boolean accountNonExpired = true;

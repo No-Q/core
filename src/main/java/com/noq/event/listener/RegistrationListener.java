@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
@@ -55,11 +56,15 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     }
 
     private void sendVerificationSms(OnRegistrationCompleteEvent event) {
-        User user = event.getUser();
-        String smsToken = ""+generateOtp();
-        createVerificationToken(user,smsToken,VerificationTokenType.SMS);
-        String smsText = "NoQ verification OTP:"+smsToken;
-        smsService.sendSms(user.getPhone(),smsText);
+        try {
+            User user = event.getUser();
+            String smsToken = ""+generateOtp();
+            createVerificationToken(user,smsToken,VerificationTokenType.SMS);
+            String smsText = "NoQ verification OTP:"+smsToken;
+            smsService.sendSms(user.getPhone(),smsText);
+        } catch (Exception e) {
+            LOGGER.error("Exception while sending verification SMS: ",e);
+        }
     }
 
     private BigInteger generateOtp() {
@@ -68,18 +73,22 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     }
 
     private void sendVerificationEmail(OnRegistrationCompleteEvent event) {
-        User user = event.getUser();
-        String emailToken = UUID.randomUUID().toString();
-        createVerificationToken(user,emailToken,VerificationTokenType.EMAIL);
+        try {
+            User user = event.getUser();
+            String emailToken = UUID.randomUUID().toString();
+            createVerificationToken(user,emailToken,VerificationTokenType.EMAIL);
 
-        String recipientAddress = user.getEmail();
-        String subject = "Registration Confirmation";
-        String confirmationUrl
-                = event.getAppUrl() + "/email/verify?token=" + emailToken;
-        String message = messages.getMessage("message.regSucc", null, event.getLocale());
-        message = message + " " + "http://localhost:8080" + confirmationUrl;
+            String recipientAddress = user.getEmail();
+            String subject = "Registration Confirmation";
+            String confirmationUrl
+                    = event.getAppUrl() + "/email/verify?token=" + emailToken;
+            String message = messages.getMessage("message.regSucc", null, event.getLocale());
+            message = message + " " + "http://localhost:8080" + confirmationUrl;
 
-        emailService.sendMail(recipientAddress,subject,message);
+            emailService.sendMail(recipientAddress,subject,message);
+        } catch (Exception e) {
+           LOGGER.error("Exception while sending verification email: ",e);
+        }
     }
 
     private void createVerificationToken(User user, String token, VerificationTokenType type) {
