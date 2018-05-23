@@ -42,18 +42,28 @@ public class RestaurantService {
 		 String key = QuadKeyUtil.LatLongToQuadKey(13, lat, longi);
 		 // get restaurants based on quad key 
 		 List<Address> addresses = (List<Address>)addressDao.findByQuadKey(key);
-		 List<String> nearByRestaurants = new ArrayList<String>();
+		 //List<Restaurant> nearByRestaurants = new ArrayList<>();
+         List<RestaurantListResponse> nearByRestaurants = new ArrayList<>();
 		 for(Address address : addresses)
 		 {
 			 double distance = DistanceCalculator.distance(lat, longi,
 					 address.getLat(), address.getLon(), "K");
 			 if(distance <= rangeInKm)
 			 {
-				 nearByRestaurants.add(address.getRestaurant().getName());
+				 nearByRestaurants.add(
+				         getNearByRestaurantResponse(address.getRestaurant(),distance));
 			 }
 		 }
 		 return gson.toJson(nearByRestaurants);
 	 }
+
+    private RestaurantListResponse getNearByRestaurantResponse(Restaurant restaurant, double distance) {
+        RestaurantListResponse response = new RestaurantListResponse(restaurant.getName(),
+                restaurant.getCostPerPerson(),restaurant.getLandmark(),
+                restaurant.getVegOnly(),restaurant.getCompany(),restaurant.getType(),
+                restaurant.getEmail(),restaurant.getPhone(),distance);
+        return response;
+    }
 
     public String getAll() {
         Iterable<Restaurant> restaurantList = restaurantDao.findByActive(Boolean.TRUE);
@@ -70,7 +80,7 @@ public class RestaurantService {
 
     public void add(RestaurantCreateRequest request) {
 	     Restaurant restaurant = new Restaurant(request.getName(),request.getEmail(),
-                 request.getPhone(),request.getVegOnly());
+                 request.getPhone(),request.getVegOnly(),request.getCostPerPerson());
 	     restaurant.setActive(Boolean.TRUE);
 	     restaurantDao.save(restaurant);
 

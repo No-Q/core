@@ -14,7 +14,7 @@ public class Restaurant extends BaseEntity{
     @Column
     private String name;
     @Column
-    private Integer costPerPerson;
+    private Float costPerPerson;
     @Column
     private String landmark;
     @Column(name="veg_only")
@@ -49,7 +49,7 @@ public class Restaurant extends BaseEntity{
         super();
     }
 
-    public Restaurant(String name, int costPerPerson, String landmark,
+    public Restaurant(String name, Float costPerPerson, String landmark,
                       Boolean vegOnly, RestaurantType type, String email,
                       Set<Address> addresses) {
         this.name = name;
@@ -61,11 +61,12 @@ public class Restaurant extends BaseEntity{
         this.email = email;
     }
 
-    public Restaurant(String name, String email, String phone, Boolean vegOnly) {
+    public Restaurant(String name, String email, String phone, Boolean vegOnly,Float costPerPerson) {
         this.name = name;
         this.vegOnly = vegOnly;
         this.email = email;
         this.phone = phone;
+        this.costPerPerson = costPerPerson;
     }
 
     public Restaurant(String name, String email, String phone, Boolean vegOnly, Address address) {
@@ -134,10 +135,10 @@ public class Restaurant extends BaseEntity{
         this.name = name;
     }
 
-    public Integer getCostPerPerson() {
+    public Float getCostPerPerson() {
         return costPerPerson;
     }
-    public void setCostPerPerson(Integer costPerPerson) {
+    public void setCostPerPerson(Float costPerPerson) {
         this.costPerPerson = costPerPerson;
     }
 

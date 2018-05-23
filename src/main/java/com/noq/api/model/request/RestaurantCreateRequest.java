@@ -16,6 +16,8 @@ public class RestaurantCreateRequest {
     private Boolean vegOnly;
     @NotNull(message = "Restaurant phone must not be null")
     private String phone;
+    @NotNull(message = "Restaurant cost per person must not be null")
+    private Float costPerPerson;
 
     private AddressAddRequest address;
 
@@ -24,12 +26,14 @@ public class RestaurantCreateRequest {
                              @JsonProperty("email") String email,
                              @JsonProperty("phone") String phone,
                              @JsonProperty("vegOnly") Boolean vegOnly,
-                             @JsonProperty("address") AddressAddRequest address) {
+                             @JsonProperty("address") AddressAddRequest address,
+                             @JsonProperty("costPerPerson") Float costPerPerson ) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.vegOnly = vegOnly;
         this.address = address;
+        this.costPerPerson = costPerPerson;
     }
 
     public String getName() {
@@ -51,6 +55,10 @@ public class RestaurantCreateRequest {
         return address;
     }
 
+    public Float getCostPerPerson() {
+        return costPerPerson;
+    }
+
     @Override
     public String toString() {
         return "RestaurantCreateRequest{" +
@@ -58,6 +66,7 @@ public class RestaurantCreateRequest {
                 ", email='" + email + '\'' +
                 ", vegOnly=" + vegOnly +
                 ", phone='" + phone + '\'' +
+                ", costPerPerson=" + costPerPerson +
                 ", address=" + address +
                 '}';
     }
