@@ -59,7 +59,8 @@ public class RestrantContoller {
     public String getNearByRestaurants(@RequestBody(required = true) RestaurantSearchByLocationRequest request) {
         LOGGER.info("Received restaurant search request: "+request);
 
-        return restaurantService.GetNearbyRestaurants(request.getLatitude(), request.getLongitude(), request.getRadius());
+        return restaurantService.GetNearbyRestaurants(request.getLatitude(), request.getLongitude(), request.getRadius(),
+                request.getDayOfWeek(),request.getHourOfDay());
     }
 
     @RequestMapping(value = "",method = RequestMethod.POST)

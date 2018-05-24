@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class RestaurantListResponse {
 
+    private Long id;
     private String name;
     private Float costPerPerson;
     private String landmark;
@@ -18,9 +19,10 @@ public class RestaurantListResponse {
     private NextAvailable nextAvailable;
     private Double distance;
 
-    public RestaurantListResponse(String name, Float costPerPerson, String landmark,
+    public RestaurantListResponse(Long id,String name, Float costPerPerson, String landmark,
                                   Boolean vegOnly, String company, RestaurantType type,
                                   String email, String phone) {
+        this.id = id;
         this.name = name;
         this.costPerPerson = costPerPerson;
         this.landmark = landmark;
@@ -32,32 +34,20 @@ public class RestaurantListResponse {
 
     }
 
-    public RestaurantListResponse(
-            String name, Float costPerPerson, String landmark, Boolean vegOnly,
-            String company, RestaurantType type, Boolean available,
-            NextAvailable nextAvailable) {
+    public void setName(String name) {
         this.name = name;
-        this.costPerPerson = costPerPerson;
-        this.landmark = landmark;
-        this.vegOnly = vegOnly;
-        this.company = company;
-        setType(type);
-        this.available = available;
-        this.nextAvailable = nextAvailable;
     }
 
-    public RestaurantListResponse(
-            String name, Float costPerPerson, String landmark, Boolean vegOnly, String company,
-            RestaurantType type, String email, String phone, double distance) {
-        this.name = name;
-        this.costPerPerson = costPerPerson;
-        this.landmark = landmark;
-        this.vegOnly = vegOnly;
-        this.company = company;
-        setType(type);
-        this.email = email;
-        this.phone = phone;
+    public void setDistance(Double distance) {
         this.distance = distance;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
+    public void setNextAvailable(NextAvailable nextAvailable) {
+        this.nextAvailable = nextAvailable;
     }
 
     private void setType(RestaurantType restaurantType) {

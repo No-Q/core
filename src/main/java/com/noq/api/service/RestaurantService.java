@@ -1,5 +1,6 @@
 package com.noq.api.service;
 
+import java.time.DayOfWeek;
 import java.util.*;
 
 import com.google.gson.Gson;
@@ -37,7 +38,7 @@ public class RestaurantService {
 
 	 private static final Logger LOGGER = LoggerFactory.getLogger(RestaurantService.class);
 	 
-	 public String GetNearbyRestaurants(double lat, double longi, double rangeInKm)
+	 public String GetNearbyRestaurants(double lat, double longi, double rangeInKm, DayOfWeek dayOfWeek, int hourOfDay)
 	 {
 		 String key = QuadKeyUtil.LatLongToQuadKey(13, lat, longi);
 		 // get restaurants based on quad key 
@@ -50,18 +51,21 @@ public class RestaurantService {
 					 address.getLat(), address.getLon(), "K");
 			 if(distance <= rangeInKm)
 			 {
-				 nearByRestaurants.add(
-				         getNearByRestaurantResponse(address.getRestaurant(),distance));
+                 RestaurantListResponse response =
+                         getNearByRestaurantResponse(address.getRestaurant());
+                 response.setDistance(distance);
+				 nearByRestaurants.add(response);
+				 addRestaurantAvailabilityResponse(address.getRestaurant(),response,dayOfWeek.getValue(),hourOfDay);
 			 }
 		 }
 		 return gson.toJson(nearByRestaurants);
 	 }
 
-    private RestaurantListResponse getNearByRestaurantResponse(Restaurant restaurant, double distance) {
-        RestaurantListResponse response = new RestaurantListResponse(restaurant.getName(),
+    private RestaurantListResponse getNearByRestaurantResponse(Restaurant restaurant) {
+        RestaurantListResponse response = new RestaurantListResponse(restaurant.getId(),restaurant.getName(),
                 restaurant.getCostPerPerson(),restaurant.getLandmark(),
                 restaurant.getVegOnly(),restaurant.getCompany(),restaurant.getType(),
-                restaurant.getEmail(),restaurant.getPhone(),distance);
+                restaurant.getEmail(),restaurant.getPhone());
         return response;
     }
 
@@ -69,10 +73,7 @@ public class RestaurantService {
         Iterable<Restaurant> restaurantList = restaurantDao.findByActive(Boolean.TRUE);
         List<RestaurantListResponse> listRestaurantResponses = new LinkedList<>();
         for(Restaurant restaurant:restaurantList){
-            RestaurantListResponse res = new RestaurantListResponse(restaurant.getName(),
-                    restaurant.getCostPerPerson(),restaurant.getLandmark(),
-                    restaurant.getVegOnly(),restaurant.getCompany(),restaurant.getType(),
-                    restaurant.getEmail(),restaurant.getPhone());
+            RestaurantListResponse res = getNearByRestaurantResponse(restaurant);
             listRestaurantResponses.add(res);
         }
         return gson.toJson(listRestaurantResponses);
@@ -137,22 +138,27 @@ public class RestaurantService {
         Iterable<Restaurant> restaurantList = restaurantDao.findByActive(Boolean.TRUE);
 
         for(Restaurant restaurant:restaurantList){
-
-            NextAvailable nextAvailable = null;
-            RestaurantAvailability availability =
-                    restaurantAvailabilityDao.findByRestaurantAndDayOfWeekAndHour(restaurant,dayOfWeek,hourOfDay);
-            Boolean available =
-                    availability.getHourOfOperationAvailable() == null ? Boolean.FALSE : availability.getHourOfOperationAvailable();
-            if(! available || !restaurant.getAvailable()){
-                    nextAvailable = getNextAvailable(restaurant.getId(),dayOfWeek,hourOfDay);
-            }
-            RestaurantListResponse response = new RestaurantListResponse(
-                    restaurant.getName(),restaurant.getCostPerPerson(),restaurant.getLandmark(),restaurant.getVegOnly(),
-                    restaurant.getCompany(),restaurant.getType(),available,nextAvailable);
-
+            RestaurantListResponse response = getNearByRestaurantResponse(restaurant);
+            addRestaurantAvailabilityResponse(restaurant,response,dayOfWeek,hourOfDay);
             responses.add(response);
         }
         return gson.toJson(responses);
+    }
+
+    private void addRestaurantAvailabilityResponse(Restaurant restaurant, RestaurantListResponse response, int dayOfWeek, int hourOfDay) {
+        NextAvailable nextAvailable = null;
+        RestaurantAvailability availability =
+                restaurantAvailabilityDao.findByRestaurantAndDayOfWeekAndHour(restaurant,dayOfWeek,hourOfDay);
+        Boolean available = Boolean.FALSE;
+        if(availability != null){
+            available =
+                    availability.getHourOfOperationAvailable() == null ? Boolean.FALSE : availability.getHourOfOperationAvailable();
+        }
+        if(! available || !restaurant.getAvailable()){
+            nextAvailable = getNextAvailable(restaurant.getId(),dayOfWeek,hourOfDay);
+        }
+        response.setAvailable(available);
+        response.setNextAvailable(nextAvailable);
     }
 
     public NextAvailable getNextAvailable(long restaurantId, Integer dayOfWeek, Integer hourOfDay) {
