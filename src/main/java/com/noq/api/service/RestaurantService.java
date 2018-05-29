@@ -100,7 +100,7 @@ public class RestaurantService {
         Predicate predicate = qRestaurant.active.eq(Boolean.TRUE);
 
         if(StringUtils.isNotBlank(cuisineType)){
-            predicate = qRestaurant.cusineType.like(cuisineType).and(predicate);
+            predicate = qRestaurant.cuisineType.like(cuisineType).and(predicate);
         }
         if(StringUtils.isNotBlank(name)){
             predicate = qRestaurant.name.like(name).and(predicate);
