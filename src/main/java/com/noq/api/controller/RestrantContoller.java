@@ -2,7 +2,7 @@ package com.noq.api.controller;
 
 import com.noq.api.model.request.DayAvailabilityRequest;
 import com.noq.api.model.request.RestaurantCreateRequest;
-import com.noq.api.model.request.RestaurantSearchByLocationRequest;
+import com.noq.api.model.request.RestaurantSearchRequest;
 import com.noq.api.service.RestaurantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -56,11 +56,11 @@ public class RestrantContoller {
     @RequestMapping(value = "/search",method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public String getNearByRestaurants(@RequestBody(required = true) RestaurantSearchByLocationRequest request) {
+    public String getNearByRestaurants(@RequestBody RestaurantSearchRequest request) {
         LOGGER.info("Received restaurant search request: "+request);
 
         return restaurantService.GetNearbyRestaurants(request.getLatitude(), request.getLongitude(), request.getRadius(),
-                request.getDayOfWeek(),request.getHourOfDay());
+                request.getDayOfWeek(),request.getHourOfDay(),request.getCuisineType(),request.getName());
     }
 
     @RequestMapping(value = "",method = RequestMethod.POST)

@@ -2,12 +2,14 @@ package com.noq.dependencies.db.dao;
 
 import com.noq.dependencies.db.model.Restaurant;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface RestaurantDao extends CrudRepository<Restaurant, Long> {
+public interface RestaurantDao extends PagingAndSortingRepository<Restaurant, Long>, QuerydslPredicateExecutor<Restaurant> {
 
     Iterable<Restaurant> findByActive(Boolean active);
 

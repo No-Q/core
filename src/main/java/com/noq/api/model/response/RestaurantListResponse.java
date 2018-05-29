@@ -1,9 +1,5 @@
 package com.noq.api.model.response;
 
-import com.noq.dependencies.db.model.enums.RestaurantType;
-
-import java.util.Date;
-
 public class RestaurantListResponse {
 
     private Long id;
@@ -12,26 +8,29 @@ public class RestaurantListResponse {
     private String landmark;
     private Boolean vegOnly;
     private String company;
-    private String type;
     private String email;
     private String phone;
     private Boolean available;
     private NextAvailable nextAvailable;
     private Double distance;
+    private String imageUrl;
+    private Integer avgPreparationTime;
+    private String cuisineType;
 
-    public RestaurantListResponse(Long id,String name, Float costPerPerson, String landmark,
-                                  Boolean vegOnly, String company, RestaurantType type,
-                                  String email, String phone) {
+    public RestaurantListResponse(Long id, String name, Float costPerPerson, String landmark,
+                                  Boolean vegOnly, String company, String email, String phone,
+                                  String imageUrl, Integer avgPreparationTime,String cuisineType) {
         this.id = id;
         this.name = name;
         this.costPerPerson = costPerPerson;
         this.landmark = landmark;
         this.vegOnly = vegOnly;
         this.company = company;
-        setType(type);
         this.email = email;
         this.phone = phone;
-
+        this.imageUrl = imageUrl;
+        this.avgPreparationTime = avgPreparationTime;
+        this.cuisineType = cuisineType;
     }
 
     public void setName(String name) {
@@ -50,10 +49,4 @@ public class RestaurantListResponse {
         this.nextAvailable = nextAvailable;
     }
 
-    private void setType(RestaurantType restaurantType) {
-        if (type != null)
-            type = restaurantType.name();
-        else
-            type = "NA";
-    }
 }

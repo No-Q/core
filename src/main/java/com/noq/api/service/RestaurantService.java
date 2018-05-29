@@ -10,7 +10,10 @@ import com.noq.api.model.response.NextAvailable;
 import com.noq.api.model.response.RestaurantListResponse;
 import com.noq.dependencies.db.dao.RestaurantAvailabilityDao;
 import com.noq.dependencies.db.dao.RestaurantDao;
+import com.noq.dependencies.db.model.QRestaurant;
 import com.noq.dependencies.db.model.RestaurantAvailability;
+import com.querydsl.core.types.Predicate;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,34 +41,81 @@ public class RestaurantService {
 
 	 private static final Logger LOGGER = LoggerFactory.getLogger(RestaurantService.class);
 	 
-	 public String GetNearbyRestaurants(double lat, double longi, double rangeInKm, DayOfWeek dayOfWeek, int hourOfDay)
+	 public String GetNearbyRestaurants(Double lat, Double longi, Integer rangeInKm, DayOfWeek dayOfWeek, Integer hourOfDay,
+                                        String cuisineType, String name)
 	 {
-		 String key = QuadKeyUtil.LatLongToQuadKey(13, lat, longi);
-		 // get restaurants based on quad key 
-		 List<Address> addresses = (List<Address>)addressDao.findByQuadKey(key);
-		 //List<Restaurant> nearByRestaurants = new ArrayList<>();
-         List<RestaurantListResponse> nearByRestaurants = new ArrayList<>();
-		 for(Address address : addresses)
-		 {
-			 double distance = DistanceCalculator.distance(lat, longi,
-					 address.getLat(), address.getLon(), "K");
-			 if(distance <= rangeInKm)
-			 {
+         Iterable<Restaurant> filteredRestaurants = getByFilters(cuisineType,name);
+
+         List<RestaurantListResponse> responseRestaurants = new ArrayList<>();
+
+         if(lat != null && longi != null && rangeInKm != null){
+             List<Long> filteredRestaurantIds = getIds(filteredRestaurants);
+
+             String key = QuadKeyUtil.LatLongToQuadKey(13, lat, longi);
+             // get restaurants based on quad key
+             List<Address> addresses = addressDao.findByQuadKey(key);
+             for(Address address : addresses)
+             {
+                 double distance = DistanceCalculator.distance(lat, longi,
+                         address.getLat(), address.getLon(), "K");
+                 if(distance <= rangeInKm)
+                 {
+                     if(filteredRestaurantIds.contains(address.getRestaurant().getId())) {
+                         RestaurantListResponse response =
+                                 getNearByRestaurantResponse(address.getRestaurant());
+                         response.setDistance(distance);
+                         responseRestaurants.add(response);
+                         if(dayOfWeek != null && hourOfDay != null){
+                             addRestaurantAvailabilityResponse(address.getRestaurant(), response, dayOfWeek.getValue(), hourOfDay);
+                         }
+                     }
+                 }
+             }
+
+         }else{
+             for(Restaurant restaurant : filteredRestaurants){
                  RestaurantListResponse response =
-                         getNearByRestaurantResponse(address.getRestaurant());
-                 response.setDistance(distance);
-				 nearByRestaurants.add(response);
-				 addRestaurantAvailabilityResponse(address.getRestaurant(),response,dayOfWeek.getValue(),hourOfDay);
-			 }
-		 }
-		 return gson.toJson(nearByRestaurants);
+                         getNearByRestaurantResponse(restaurant);
+                 responseRestaurants.add(response);
+                 if(dayOfWeek != null && hourOfDay != null){
+                     addRestaurantAvailabilityResponse(restaurant, response, dayOfWeek.getValue(), hourOfDay);
+                 }
+             }
+         }
+
+		 return gson.toJson(responseRestaurants);
 	 }
+
+    private List<Long> getIds(Iterable<Restaurant> restaurants) {
+	     List<Long> ids = new ArrayList<>();
+	     for(Restaurant restaurant : restaurants){
+	         ids.add(restaurant.getId());
+         }
+	     return  ids;
+    }
+
+    private Iterable<Restaurant> getByFilters(String cuisineType, String name) {
+        QRestaurant qRestaurant = QRestaurant.restaurant;
+
+        Predicate predicate = qRestaurant.active.eq(Boolean.TRUE);
+
+        if(StringUtils.isNotBlank(cuisineType)){
+            predicate = qRestaurant.cusineType.like(cuisineType).and(predicate);
+        }
+        if(StringUtils.isNotBlank(name)){
+            predicate = qRestaurant.name.like(name).and(predicate);
+        }
+
+        Iterable<Restaurant> restaurants = restaurantDao.findAll(predicate);
+        return restaurants;
+   }
 
     private RestaurantListResponse getNearByRestaurantResponse(Restaurant restaurant) {
         RestaurantListResponse response = new RestaurantListResponse(restaurant.getId(),restaurant.getName(),
                 restaurant.getCostPerPerson(),restaurant.getLandmark(),
-                restaurant.getVegOnly(),restaurant.getCompany(),restaurant.getType(),
-                restaurant.getEmail(),restaurant.getPhone());
+                restaurant.getVegOnly(),restaurant.getCompany(),
+                restaurant.getEmail(),restaurant.getPhone(),restaurant.getImageUrl(),
+                restaurant.getAvgPreparationTime(),restaurant.getCuisineType());
         return response;
     }
 

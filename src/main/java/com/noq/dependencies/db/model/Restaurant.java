@@ -27,11 +27,16 @@ public class Restaurant extends BaseEntity{
     private Boolean available;
     @Column
     private Date nextAvailable;
-
     @Column
     private String email;
     @Column
     private String phone;
+    @Column
+    private Integer avgPreparationTime;
+    @Column
+    private String imageUrl;
+    @Column
+    private String cuisineType;
 
     @OneToMany(targetEntity=Address.class, mappedBy="restaurant",
             fetch= FetchType.LAZY, cascade = CascadeType.ALL)
@@ -164,5 +169,41 @@ public class Restaurant extends BaseEntity{
 
     public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public Integer getAvgPreparationTime() {
+        return avgPreparationTime;
+    }
+
+    public void setAvgPreparationTime(Integer avgPreparationTime) {
+        this.avgPreparationTime = avgPreparationTime;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getCuisineType() {
+        return cuisineType;
+    }
+
+    public List<RestaurantAvailability> getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(List<RestaurantAvailability> availability) {
+        this.availability = availability;
+    }
+
+    public Set<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<Item> items) {
+        this.items = items;
     }
 }

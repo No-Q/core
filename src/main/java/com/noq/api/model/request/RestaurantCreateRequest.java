@@ -2,8 +2,6 @@ package com.noq.api.model.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.noq.dependencies.db.model.Address;
-
 import javax.validation.constraints.NotNull;
 
 public class RestaurantCreateRequest {
@@ -18,6 +16,12 @@ public class RestaurantCreateRequest {
     private String phone;
     @NotNull(message = "Restaurant cost per person must not be null")
     private Float costPerPerson;
+    @NotNull(message = "Restaurant image url must not be null")
+    private String imageUrl;
+    @NotNull(message = "Restaurant avg meal preparation time must not be null")
+    private Integer avgPreparationTime;
+    @NotNull(message = "Restaurant cusine type must not be null")
+    private String cuisineType;
 
     private AddressAddRequest address;
 
@@ -27,13 +31,19 @@ public class RestaurantCreateRequest {
                              @JsonProperty("phone") String phone,
                              @JsonProperty("vegOnly") Boolean vegOnly,
                              @JsonProperty("address") AddressAddRequest address,
-                             @JsonProperty("costPerPerson") Float costPerPerson ) {
+                             @JsonProperty("costPerPerson") Float costPerPerson,
+                             @JsonProperty("imageUrl") String imageUrl,
+                             @JsonProperty("avgPreparationTime") Integer avgPreparationTime,
+                             @JsonProperty("cuisineType") String cuisineType) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.vegOnly = vegOnly;
         this.address = address;
         this.costPerPerson = costPerPerson;
+        this.imageUrl = imageUrl;
+        this.avgPreparationTime = avgPreparationTime;
+        this.cuisineType = cuisineType;
     }
 
     public String getName() {
@@ -59,6 +69,18 @@ public class RestaurantCreateRequest {
         return costPerPerson;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Integer getAvgPreparationTime() {
+        return avgPreparationTime;
+    }
+
+    public String getCuisineType() {
+        return cuisineType;
+    }
+
     @Override
     public String toString() {
         return "RestaurantCreateRequest{" +
@@ -67,6 +89,9 @@ public class RestaurantCreateRequest {
                 ", vegOnly=" + vegOnly +
                 ", phone='" + phone + '\'' +
                 ", costPerPerson=" + costPerPerson +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", avgPreparationTime=" + avgPreparationTime +
+                ", cuisineType='" + cuisineType + '\'' +
                 ", address=" + address +
                 '}';
     }
