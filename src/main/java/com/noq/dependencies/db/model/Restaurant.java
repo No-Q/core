@@ -66,12 +66,16 @@ public class Restaurant extends BaseEntity{
         this.email = email;
     }
 
-    public Restaurant(String name, String email, String phone, Boolean vegOnly,Float costPerPerson) {
+    public Restaurant(String name, String email, String phone, Boolean vegOnly,Float costPerPerson,String cuisineType,
+                      Integer avgPreparationTime, String imageUrl) {
         this.name = name;
         this.vegOnly = vegOnly;
         this.email = email;
         this.phone = phone;
         this.costPerPerson = costPerPerson;
+        this.cuisineType = cuisineType;
+        this.avgPreparationTime = avgPreparationTime;
+        this.imageUrl = imageUrl;
     }
 
     public Restaurant(String name, String email, String phone, Boolean vegOnly, Address address) {

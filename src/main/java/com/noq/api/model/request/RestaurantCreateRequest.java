@@ -20,7 +20,7 @@ public class RestaurantCreateRequest {
     private String imageUrl;
     @NotNull(message = "Restaurant avg meal preparation time must not be null")
     private Integer avgPreparationTime;
-    @NotNull(message = "Restaurant cusine type must not be null")
+    @NotNull(message = "Restaurant cuisine type must not be null")
     private String cuisineType;
 
     private AddressAddRequest address;

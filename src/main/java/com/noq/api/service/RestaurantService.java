@@ -131,7 +131,8 @@ public class RestaurantService {
 
     public void add(RestaurantCreateRequest request) {
 	     Restaurant restaurant = new Restaurant(request.getName(),request.getEmail(),
-                 request.getPhone(),request.getVegOnly(),request.getCostPerPerson());
+                 request.getPhone(),request.getVegOnly(),request.getCostPerPerson(),request.getCuisineType(),
+                 request.getAvgPreparationTime(),request.getImageUrl());
 	     restaurant.setActive(Boolean.TRUE);
 	     restaurantDao.save(restaurant);
 
