@@ -91,4 +91,9 @@ public class ItemService {
         return gson.toJson(responses);
     }
 
+    public String getItemTypes(Long restaurantId) {
+        List<ItemType> responses = new ArrayList<>();
+        responses = itemDao.getItemTypeForRestaurant(restaurantId);
+        return gson.toJson(responses);
+    }
 }

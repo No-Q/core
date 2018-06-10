@@ -63,7 +63,8 @@ public class ItemController {
             @RequestParam(required = false, name = "restaurantId") Long restaurantId,
             @RequestParam(required = false, name = "mealType") String mealType,
             @RequestParam(required = false, name = "itemName") String itemName,
-            @RequestParam(required = false, name = "itemType") String itemType) throws ValidationException {
+            @RequestParam(required = false, name = "itemType") String itemType)
+                throws ValidationException {
         LOGGER.info("Received filter item request with filters::"+
         " restaurantId: "+restaurantId+" mealType"+mealType+" itemName:"+itemName+
         " itemType:"+itemType);
@@ -73,6 +74,16 @@ public class ItemController {
             throw new ValidationException("Invalid filter value");
         }
     }
+
+    @ApiOperation(value="get meal types for restaurants")
+    @RequestMapping(value = "restaurant/{id}/itemTypes", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    private String getMealTypes(@PathVariable("id") Long restaurantId){
+        LOGGER.info("Received get meal types request for restaurant id:"+ restaurantId);
+        return itemService.getItemTypes(restaurantId);
+    }
+
 /*
     @RequestMapping(value = "/items/", params = { "itemName", "itemType" })
     public Iterable<Item> find(

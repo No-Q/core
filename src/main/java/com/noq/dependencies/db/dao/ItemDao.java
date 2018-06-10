@@ -21,4 +21,6 @@ public interface ItemDao extends CrudRepository<Item,Long>, QuerydslPredicateExe
   //  @Query("from Item i where i.restaurant.id == :restaurant.id and i.mealType == :mealType and i.itemType == :itemType and i.name like '%:name%'")
     Iterable<Item> findByRestaurantAndMealTypeAndItemTypeAndName(Restaurant restaurant, MealType mealType, ItemType itemType, String itemName);
 
+    @Query("SELECT DISTINCT i.itemType from Item i where i.restaurant.id = :restaurantId")
+    List<ItemType> getItemTypeForRestaurant(@Param("restaurantId") Long restaurantId);
 }

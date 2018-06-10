@@ -79,4 +79,5 @@ public class RestrantContoller {
         LOGGER.info("Received restaurant availability add request: "+request);
         restaurantService.addAvailability(id,request);
     }
+
 }
