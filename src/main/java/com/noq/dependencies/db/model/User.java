@@ -42,10 +42,13 @@ public class User extends BaseEntity{
     @Column(name = "role")
     private UserRole role;
 
-
     @OneToMany(targetEntity=Address.class, mappedBy="user",
             fetch= FetchType.EAGER, cascade = CascadeType.ALL)
     Set<Address> addresses;
+
+    @OneToMany(targetEntity=Cart.class, mappedBy="user",
+            fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<Cart> carts;
 
 	public User() {
 		super();

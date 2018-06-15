@@ -1,6 +1,7 @@
 package com.noq.api.model.response;
 
 public class ItemResponse {
+    Long id;
     String name;
     String description; Float price;
     Float discount;
@@ -8,8 +9,9 @@ public class ItemResponse {
     byte[] image;
     Boolean veg;
 
-    public ItemResponse(String name, String description, Float price, Float discount,
+    public ItemResponse(Long id, String name, String description, Float price, Float discount,
                         Boolean available, Integer preparationTime, byte[] image, Boolean veg) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.xml.bind.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemService {
@@ -83,7 +84,7 @@ public class ItemService {
         List<ItemResponse> responses = new ArrayList<>();
 
         for(Item item: itemIterable){
-            ItemResponse response = new ItemResponse(item.getName(),item.getDescription(),
+            ItemResponse response = new ItemResponse(item.getId(),item.getName(),item.getDescription(),
                     item.getPrice(),item.getDiscount(),item.getAvailable(),item.getPreparationTime(),
                     item.getImage(),item.getVeg());
             responses.add(response);
@@ -95,5 +96,13 @@ public class ItemService {
         List<ItemType> responses = new ArrayList<>();
         responses = itemDao.getItemTypeForRestaurant(restaurantId);
         return gson.toJson(responses);
+    }
+
+    public Item getItem(Long itemId) {
+        Optional<Item> item = itemDao.findById(itemId);
+        if(item.isPresent()){
+            return item.get();
+        }
+        return null;
     }
 }

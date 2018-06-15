@@ -39,7 +39,7 @@ public class Restaurant extends BaseEntity{
     private String cuisineType;
 
     @OneToMany(targetEntity=Address.class, mappedBy="restaurant",
-            fetch= FetchType.LAZY, cascade = CascadeType.ALL)
+            fetch= FetchType.EAGER, cascade = CascadeType.ALL)
     Set<Address> addresses;
 
     @OneToMany(targetEntity=RestaurantAvailability.class, mappedBy="restaurant",
@@ -49,6 +49,10 @@ public class Restaurant extends BaseEntity{
     @OneToMany(targetEntity=Item.class, mappedBy="restaurant",
             fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     Set<Item> items;
+
+    @OneToMany(targetEntity=Cart.class, mappedBy="restaurant",
+            cascade = CascadeType.ALL)
+    Set<Cart> carts;
 
     public Restaurant() {
         super();
